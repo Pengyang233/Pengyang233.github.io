@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>杂七杂八 | Pengyang&#39;s wiki</title>
+    
+    
+        <meta name="keywords" content="杂七杂八" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Windows下如何使用makefile参考这里 关于CMake的使用CMake通常是可以通过cmakelist这个文件来生成相关的工程文件，比如我使用c++编程，使用vs2015的话，就需要打开sln这个工程文件来查看整个工程，包括其中的头文件和cpp文件。这时我们就需要使用cmake来生成这个对应的sln文件  确认cmakelist.txt文件的位置，并确认其确实存在    打开我们已经下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杂七杂八">
+<meta property="og:url" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/index.html">
+<meta property="og:site_name" content="Pengyang&#39;s wiki">
+<meta property="og:description" content="Windows下如何使用makefile参考这里 关于CMake的使用CMake通常是可以通过cmakelist这个文件来生成相关的工程文件，比如我使用c++编程，使用vs2015的话，就需要打开sln这个工程文件来查看整个工程，包括其中的头文件和cpp文件。这时我们就需要使用cmake来生成这个对应的sln文件  确认cmakelist.txt文件的位置，并确认其确实存在    打开我们已经下载">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200728095552384.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/clip_image001.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/clip_image001-1595901070102.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200728095621523.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200728095802917.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200728100011601.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200728100042357.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200728100114658.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200728100147296.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200802173218513.png">
+<meta property="article:published_time" content="2020-12-28T07:16:00.958Z">
+<meta property="article:modified_time" content="2020-12-28T07:16:00.958Z">
+<meta property="article:author" content="Pengyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/image-20200728095552384.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Pengyang&#39;s wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pengyang&#39;s wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-up fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Liunx
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Docker与CUDA
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">CUDA一般知识</a></li>  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/Docker%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">Docker一般知识</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/Liunx/tmux_zsh/">tmux_zsh</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">常用命令</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98/">服务器问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            其它
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/">Git和Github</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Vscode/">Vscode</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo搭建博客</a></li>  <li class="file active"><a href="/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            待分类
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/English/">English</a></li>  <li class="file"><a href="/wiki/%E4%B9%A6%E5%8D%95/">书单</a></li>  <li class="file"><a href="/wiki/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据分析
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/">一些工具</a></li>  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/GAN/">GAN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/">RNN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Trick/">Trick</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E4%BC%98%E8%B4%A8Blog%E7%BF%BB%E8%AF%91/">优质Blog翻译</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            编程
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Latex
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/">一些操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E5%B8%B8%E7%94%A8%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%95%B4%E7%90%86/">常用数学符号整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Matlab
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E6%B3%A8%E6%84%8F/">注意</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/Conda_and_pip/">Conda_and_pip</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/">python通用知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Pytorch
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/AnalyseTool/">AnalyseTool</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Bug/">Bug</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/">Lightning</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/parameters/">parameters</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Tensorflow
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Tensorflow/Bug/">Bug</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            论文
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/BilinearPooling/">BilinearPooling</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/Identification&Verification/">Identification&Verification</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/RotationNet/">RotationNet</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            课程笔记（填坑）
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            cs231n
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/">Lecture2</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture3/">Lecture3</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/%E5%BA%8F/">序</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-其它/杂七杂八" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E5%85%B6%E5%AE%83/">其它</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">
+            <time datetime="2020-12-28T07:16:00.958Z" itemprop="datePublished">2020-12-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            杂七杂八
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows下如何使用makefile"><span class="toc-number">1.</span> <span class="toc-text">Windows下如何使用makefile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于CMake的使用"><span class="toc-number">2.</span> <span class="toc-text">关于CMake的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#飞机起飞"><span class="toc-number">3.</span> <span class="toc-text">飞机起飞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash"><span class="toc-number">3.1.</span> <span class="toc-text">Clash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-更新节点信息之后在-Proxies-中内容却为空"><span class="toc-number">3.2.</span> <span class="toc-text">Clash 更新节点信息之后在 Proxies 中内容却为空</span></a></li></ol></li></ol>
+                </div>
+            
+        
+        
+            <h2 id="Windows下如何使用makefile"><a href="#Windows下如何使用makefile" class="headerlink" title="Windows下如何使用makefile"></a>Windows下如何使用makefile</h2><p>参考<a href="https://www.cnblogs.com/cvbnm/articles/1954872.html" target="_blank" rel="noopener">这里</a></p>
+<h2 id="关于CMake的使用"><a href="#关于CMake的使用" class="headerlink" title="关于CMake的使用"></a>关于CMake的使用</h2><p>CMake通常是可以通过cmakelist这个文件来生成相关的工程文件，比如我使用c++编程，使用vs2015的话，就需要打开sln这个工程文件来查看整个工程，包括其中的头文件和cpp文件。这时我们就需要使用cmake来生成这个对应的sln文件</p>
+<ul>
+<li>确认<code>cmakelist.txt</code>文件的位置，并确认其确实存在</li>
+</ul>
+<p><img src="image-20200728095552384.png" alt="image-20200728095552384" style="zoom:80%;" /></p>
+<ul>
+<li><p>打开我们已经下载好的cMake程序</p>
+<p><img src="clip_image001.png" alt="cmake-gui"></p>
+<p>此时会显示如下窗口</p>
+<p><img src="clip_image001-1595901070102.png" alt="windoes"></p>
+<ul>
+<li>第一行代表的是你要生成工程文件的源代码文件在哪，换句话说，就是cmkelist文件在那个路径</li>
+<li>第二个代表的是你要把生成的工程文件（夹）放在哪个路径下面，可以通过点击后面的按钮来选择路径</li>
+</ul>
+</li>
+<li><p>之后点击<code>Configure</code>，显示如下，其中第一个下拉菜单表示你要生成的工程文件是那个程序使用的，下拉菜单里有很多很多，包括什么arm平台之类的，根据自己的实际情况来进行选择，别的不知道是什么，就不管了，直接点击<code>Finish</code></p>
+</li>
+</ul>
+<p><img src="image-20200728095621523.png" alt="image-20200728095621523" style="zoom:80%;" /></p>
+<ul>
+<li><p>若出现了错误信息</p>
+<p><img src="image-20200728095802917.png" alt="image-20200728095802917"></p>
+<p>意思是我在<code>opencvpath</code>这个地方找不到<code>opencv</code>的<code>cmake</code>文件，应该对应其他的库会出现其他的错误信息，在这里我还没有遇到，遇到了以后会继续补充。</p>
+<p>然后我们看上面</p>
+<p><img src="image-20200728100011601.png" alt="image-20200728100011601" style="zoom:80%;" /></p>
+<p><code>OpenCV_DIR</code>这一栏写着not found，说明这里就是指示opencv的cmke的路径，我们把这里更改一下</p>
+<p><img src="image-20200728100042357.png" alt="image-20200728100042357" style="zoom:80%;" /></p>
+</li>
+<li><p>再点击<code>configure</code>，出现如下信息</p>
+<p><img src="image-20200728100114658.png" alt="image-20200728100114658" style="zoom:80%;" /></p>
+<p>这样的话再点击generate，出现generating done的提示信息，就说明工程文件生成成功啦。</p>
+<p><img src="image-20200728100147296.png" alt="image-20200728100147296" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h2 id="飞机起飞"><a href="#飞机起飞" class="headerlink" title="飞机起飞"></a>飞机起飞</h2><h3 id="Clash"><a href="#Clash" class="headerlink" title="Clash"></a>Clash</h3><ul>
+<li><p><code>Clash v11.0</code>已经原生支持SSR，但是如果机场并不提供Clash的订阅链接，还是需要进行连接转换，只是转换的目标是<code>Clash</code>而不是<code>ClashR</code></p>
+</li>
+<li><p><code>Clash</code>项目地址: <a href="https://github.com/Fndroid/clash_for_windows_pkg/releases" target="_blank" rel="noopener">https://github.com/Fndroid/clash_for_windows_pkg/releases</a></p>
+</li>
+<li>感谢一直更新 <code>ClashR</code>内核的各位大神，<code>ClashR</code>的电报：<a href="https://telegra.ph/ClashR-03-06" target="_blank" rel="noopener">https://telegra.ph/ClashR-03-06</a></li>
+</ul>
+<h3 id="Clash-更新节点信息之后在-Proxies-中内容却为空"><a href="#Clash-更新节点信息之后在-Proxies-中内容却为空" class="headerlink" title="Clash 更新节点信息之后在 Proxies 中内容却为空"></a>Clash 更新节点信息之后在 <code>Proxies</code> 中内容却为空</h3><p>问题截图</p>
+<p><img src="image-20200802173218513.png" alt="问题截图"></p>
+<p><a href="https://github.com/Fndroid/clash_for_windows_pkg/issues/694#issuecomment-630028326" target="_blank" rel="noopener">解决方式</a>：</p>
+<ol>
+<li><p>在Profiles界面，在你需要修改的配置文件那里，点击左下的Edit in text mode，进入文本编辑模式。</p>
+</li>
+<li><p>在文本编辑里面，<br>把【Rule】修改为【rules】，在规则列表最开头。<br>把【Proxy】修改为【proxies】，在节点列表最开头。<br>把【Proxy Group】修改为【proxy-groups】，在节点规则组最开头。<br>其实就是修改3个地方，不要输入括号，注意大小写敏感。不要直接搜索替换，免得把其他地方的也弄掉了。</p>
+</li>
+</ol>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/wiki/%E5%85%B6%E5%AE%83/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    hexo搭建博客
+                
+            </div>
+        </a>
+    
+    
+        <a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">一些工具</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Pengyang &copy; 2020 
+            <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="noopener">wikitten</a>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

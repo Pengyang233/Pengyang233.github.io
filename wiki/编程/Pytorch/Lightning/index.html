@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Lightning | Pengyang&#39;s wiki</title>
+    
+    
+        <meta name="keywords" content="Lightning" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Pytorch-Lightning关键函数 上图展示了几个关键函数，其中最重要的是LightningModule这个类里的前两个；实际上，剩下两个类的函数其实也可以在LightningModule中定义，只不过如果定义三个类，可能函数的更加清楚。 撸Docs的笔记- 几个细节 pytorch-lightnint中没有自动初始化网络参数的封装，初始化网络参数需要自己做  如何在LightningMo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lightning">
+<meta property="og:url" content="http://yoursite.com/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/index.html">
+<meta property="og:site_name" content="Pengyang&#39;s wiki">
+<meta property="og:description" content="Pytorch-Lightning关键函数 上图展示了几个关键函数，其中最重要的是LightningModule这个类里的前两个；实际上，剩下两个类的函数其实也可以在LightningModule中定义，只不过如果定义三个类，可能函数的更加清楚。 撸Docs的笔记- 几个细节 pytorch-lightnint中没有自动初始化网络参数的封装，初始化网络参数需要自己做  如何在LightningMo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/image-20200912164058051.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/image-20200924225912855.png">
+<meta property="article:published_time" content="2020-12-28T07:16:00.966Z">
+<meta property="article:modified_time" content="2020-12-28T07:16:00.966Z">
+<meta property="article:author" content="Pengyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/image-20200912164058051.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Pengyang&#39;s wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pengyang&#39;s wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-up fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Liunx
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Docker与CUDA
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">CUDA一般知识</a></li>  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/Docker%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">Docker一般知识</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/Liunx/tmux_zsh/">tmux_zsh</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">常用命令</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98/">服务器问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            其它
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/">Git和Github</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Vscode/">Vscode</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo搭建博客</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            待分类
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/English/">English</a></li>  <li class="file"><a href="/wiki/%E4%B9%A6%E5%8D%95/">书单</a></li>  <li class="file"><a href="/wiki/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据分析
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/">一些工具</a></li>  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/GAN/">GAN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/">RNN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Trick/">Trick</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E4%BC%98%E8%B4%A8Blog%E7%BF%BB%E8%AF%91/">优质Blog翻译</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            编程
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Latex
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/">一些操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E5%B8%B8%E7%94%A8%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%95%B4%E7%90%86/">常用数学符号整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Matlab
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E6%B3%A8%E6%84%8F/">注意</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/Conda_and_pip/">Conda_and_pip</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/">python通用知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Pytorch
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/AnalyseTool/">AnalyseTool</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Bug/">Bug</a></li>  <li class="file active"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/">Lightning</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/parameters/">parameters</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Tensorflow
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Tensorflow/Bug/">Bug</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            论文
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/BilinearPooling/">BilinearPooling</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/Identification&Verification/">Identification&Verification</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/RotationNet/">RotationNet</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            课程笔记（填坑）
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            cs231n
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/">Lecture2</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture3/">Lecture3</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/%E5%BA%8F/">序</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-编程/Pytorch/Lightning" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Pytorch/">Pytorch</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/">
+            <time datetime="2020-12-28T07:16:00.966Z" itemprop="datePublished">2020-12-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Lightning
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Pytorch-Lightning"><span class="toc-number">1.</span> <span class="toc-text">Pytorch-Lightning</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关键函数"><span class="toc-number">1.1.</span> <span class="toc-text">关键函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撸Docs的笔记"><span class="toc-number">1.2.</span> <span class="toc-text">撸Docs的笔记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#几个细节"><span class="toc-number">1.3.</span> <span class="toc-text">几个细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实际使用中需要注意的点"><span class="toc-number">1.4.</span> <span class="toc-text">实际使用中需要注意的点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向-pl-Trainer-class-MModel-pl-LightningModule-和class-MyData-pl-LightningDataModule-传入参数"><span class="toc-number">1.4.1.</span> <span class="toc-text">向 pl.Trainer(), class MModel(pl.LightningModule)和class MyData(pl.LightningDataModule)传入参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#想在每跑完一次Training-step-之后执行点类似cal-metric的op，可能是每个step后或者每个epoch之后，怎么办"><span class="toc-number">1.4.2.</span> <span class="toc-text">想在每跑完一次Training_step()之后执行点类似cal metric的op，可能是每个step后或者每个epoch之后，怎么办?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优化器、学习率衰减策略"><span class="toc-number">1.4.3.</span> <span class="toc-text">优化器、学习率衰减策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#load-weight出问题的各种情况"><span class="toc-number">1.4.4.</span> <span class="toc-text">load weight出问题的各种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#本质是什么？"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">本质是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Model-1包含-Model-2，同时Model-1中还有新的层"><span class="toc-number">1.4.4.2.</span> <span class="toc-text">Model 1包含 Model 2，同时Model 1中还有新的层</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不太清楚的坑"><span class="toc-number">1.5.</span> <span class="toc-text">不太清楚的坑</span></a></li></ol></li></ol>
+                </div>
+            
+        
+        
+            <h1 id="Pytorch-Lightning"><a href="#Pytorch-Lightning" class="headerlink" title="Pytorch-Lightning"></a>Pytorch-Lightning</h1><h2 id="关键函数"><a href="#关键函数" class="headerlink" title="关键函数"></a>关键函数</h2><p><img src="image-20200912164058051.png" alt="image-20200912164058051" style="zoom: 80%;" /></p>
+<p>上图展示了几个关键函数，其中最重要的是<code>LightningModule</code>这个类里的前两个；实际上，剩下两个类的函数其实也可以在<code>LightningModule</code>中定义，只不过如果定义三个类，可能函数的更加清楚。</p>
+<h2 id="撸Docs的笔记"><a href="#撸Docs的笔记" class="headerlink" title="撸Docs的笔记"></a>撸Docs的笔记</h2><p>-</p>
+<h2 id="几个细节"><a href="#几个细节" class="headerlink" title="几个细节"></a>几个细节</h2><ul>
+<li><p><code>pytorch-lightnint</code>中没有自动初始化网络参数的封装，初始化网络参数需要自己做</p>
+</li>
+<li><p>如何在<code>LightningModule</code>的类内来访问相关的<code>ckpt</code>以及<code>ymal</code>的存储地址呢？(默认的是<code>..../lihgtning_logs/version1/</code>这样的)</p>
+<p>这个根据不同的传入的不同的<code>logger</code>来决定，对于默认的情况（默认tensorboard），可以访问变量：<code>self.logger.log_dir</code>，还有其他的相关的路径，也可以访问，不过都是部分路径了，比如<code>self.logger.save_dir, self.logger.version</code>等等。</p>
+<p>PS：若 logger变了，那么可能需要访问不同的变量来找路径了。</p>
+</li>
+</ul>
+<h2 id="实际使用中需要注意的点"><a href="#实际使用中需要注意的点" class="headerlink" title="实际使用中需要注意的点"></a>实际使用中需要注意的点</h2><h3 id="向-pl-Trainer-class-MModel-pl-LightningModule-和class-MyData-pl-LightningDataModule-传入参数"><a href="#向-pl-Trainer-class-MModel-pl-LightningModule-和class-MyData-pl-LightningDataModule-传入参数" class="headerlink" title="向 pl.Trainer(), class MModel(pl.LightningModule)和class MyData(pl.LightningDataModule)传入参数"></a>向 <code>pl.Trainer()</code>, <code>class MModel(pl.LightningModule)</code>和<code>class MyData(pl.LightningDataModule)</code>传入参数</h3><ul>
+<li><p>建议在两个自己写的类中分别设置自己的<code>add_specific_para()</code>，来<code>add</code>专门的变量</p>
+</li>
+<li><p>继承<code>pl.LightningDataModule</code>的子类类定义示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BulidMyData</span><span class="params">(pl.LightningDataModule)</span>:</span>  <span class="comment">#是定义自己的 Datalosader 的类，实际上也可以合并在pl.LightningDataModule子类中</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, train_path, test_path, batch_size, **kwargs)</span>:</span></span><br><span class="line">        self.train_path = train_path</span><br><span class="line">        self.test_path = test_path</span><br><span class="line">        self.batch_size = batch_size</span><br><span class="line">    ....</span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_dataset_specific_args</span><span class="params">(parent_parser)</span>:</span></span><br><span class="line">        parser = ArgumentParser(parents=[parent_parser], add_help=<span class="literal">False</span>)</span><br><span class="line">        parser.add_argument(<span class="string">'--train_path'</span>, type=str, default=<span class="string">'/home/zpy/MyProject/VeinDataset/3d_vein/roi_clahe/train'</span>)</span><br><span class="line">        parser.add_argument(<span class="string">'--test_path'</span>, type=str, default=<span class="string">'/home/zpy/MyProject/VeinDataset/3d_vein/roi_clahe/test'</span>)</span><br><span class="line">        <span class="keyword">return</span> parser</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意这个类中，类内的变量的赋值需要使用<code>self.para = para</code>，并且一定有不定参数<code>**kwargs</code>，防止参数传多了的时候报错。</li>
+<li>如果在此类内要使用这些变量，就直接使用<code>self.para</code>叫出来就好</li>
+</ul>
+</li>
+<li><p>继承<code>pl.LightningModule</code>的子类类定义示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MModel</span><span class="params">(pl.LightningModule)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, learning_rate,weight_decay, batch_size, **kwargs)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        <span class="comment"># Architure</span></span><br><span class="line">        self.layer1 = nn.Linear(<span class="number">128</span>,<span class="number">64</span>)</span><br><span class="line">        self.layer2 = nn.Linear(<span class="number">64</span>,<span class="number">32</span>)</span><br><span class="line">        self.layer2 = nn.Linear(<span class="number">32</span>,<span class="number">2</span>)</span><br><span class="line">        <span class="comment">## Get para</span></span><br><span class="line">        self.save_hyperparameters()  <span class="comment">#！！！注意此函数！！！</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_model_specific_args</span><span class="params">(parent_parser)</span>:</span></span><br><span class="line">        parser = ArgumentParser(parents=[parent_parser], add_help=<span class="literal">False</span>)</span><br><span class="line">        parser.add_argument(<span class="string">'--learning_rate'</span>, type=float, default=<span class="number">3e-4</span>)</span><br><span class="line">        parser.add_argument(<span class="string">'--weight_decay'</span>, type=float, default=<span class="number">1e-5</span>)</span><br><span class="line">        <span class="keyword">return</span> parser</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在这个子类的类初始化函数中，最好不要采用上面的<code>self.para=para</code>的赋值方式(可以用，但不建议)</li>
+<li>执行函数<code>self.save_hyperparameters()</code>之后，访问类内变量，可以采用<code>self.hparams.para_name</code>的方式。<ul>
+<li>执行这个函数后，该类中会有一个<code>self.hparams</code>的字典，这个字典内保存了所有的参数（如果以<code>**var(args)</code>方式传进来的，那就是全部的参数，此时只需要保证需要的参数在里面就行），同时在对应的路径也会生成<code>hparams.yaml</code>文件，其中保存了所有的参数</li>
+</ul>
+</li>
+<li>类初始化函数中一定要有<code>**kwargs</code></li>
+</ul>
+</li>
+<li><p>传入参数代码示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">parser = ArgumentParser(add_help=<span class="literal">False</span>)</span><br><span class="line">parser.add_argument(<span class="string">'--batch_size'</span>, type=int, default=<span class="number">32</span>)</span><br><span class="line">parser.add_argument(<span class="string">'--max_epochs'</span>, type=int, default=<span class="number">500</span>)</span><br><span class="line">parser.add_argument(<span class="string">'--check_val_every_n_epoch'</span>, type=int, default=<span class="number">5</span>)</span><br><span class="line">parser.add_argument(<span class="string">'--gpus'</span>, type=int, default=<span class="number">1</span>)</span><br><span class="line">parser.add_argument(<span class="string">'--fast_dev_run'</span>, type=bool, default=<span class="literal">False</span>) <span class="comment">#快速实验</span></span><br><span class="line"></span><br><span class="line">parser = BulidMyData.add_dataset_specific_args(parser)  <span class="comment">#添加那些指定的参数</span></span><br><span class="line">parser = MModel.add_model_specific_args(parser)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">  </span><br><span class="line"><span class="comment"># mdata = BulidMyData.from_argparse_args(args)  #也可以这么写</span></span><br><span class="line">mdata = BulidMyData(**vars(args))  <span class="comment">#！ 注意俩星号</span></span><br><span class="line">model = MModel(**vars(args))       <span class="comment">#！ 注意这里怎么写的</span></span><br><span class="line"></span><br><span class="line">trainer = pl.Trainer.from_argparse_args(args)  <span class="comment">## 注意这里的函数，多余的参数会被过滤掉，传多了没事。</span></span><br><span class="line">trainer.fit(model, datamodule=mdata)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="想在每跑完一次Training-step-之后执行点类似cal-metric的op，可能是每个step后或者每个epoch之后，怎么办"><a href="#想在每跑完一次Training-step-之后执行点类似cal-metric的op，可能是每个step后或者每个epoch之后，怎么办" class="headerlink" title="想在每跑完一次Training_step()之后执行点类似cal metric的op，可能是每个step后或者每个epoch之后，怎么办?"></a>想在每跑完一次<code>Training_step()</code>之后执行点类似cal metric的op，可能是每个step后或者每个epoch之后，怎么办?</h3><ul>
+<li><p>同<code>validation</code></p>
+</li>
+<li><p>对应函数分别为<code>Training_step_end()</code>和<code>Training_epoch_end()</code>，把需要的操作写在这个函数里面。</p>
+</li>
+<li><p>上述两种函数，写出来都会自动补全成下图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">validation_epoch_end</span><span class="params">(self, outputs)</span>:</span></span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">return</span> result <span class="comment">#对应的属于EvalResult或者TrainResult</span></span><br></pre></td></tr></table></figure>
+<p>其中，函数参数outputs不用改，这个函数也不用显式调用，outputs是上面的对应的<code>_step</code>函数的输出（应该是<code>EvalResult</code>或者<code>TrainResult</code>）</p>
+</li>
+</ul>
+<ul>
+<li><p>为了能够正常的传送参数，下图是示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">validation_step</span><span class="params">(self, batch, batch_idx)</span>:</span></span><br><span class="line">        loss, score = self._share_step(batch, batch_idx)</span><br><span class="line">        result = pl.EvalResult(checkpoint_on=loss)</span><br><span class="line">        result.log(<span class="string">'Val_loss'</span>,loss,on_step=<span class="literal">False</span>, on_epoch=<span class="literal">True</span>,logger=<span class="literal">False</span>)</span><br><span class="line">        result.score = score.detach().cpu().numpy()  <span class="comment"># 注意这句</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">validation_epoch_end</span><span class="params">(self, outputs)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.current_epoch==<span class="number">0</span>: <span class="comment">#当current_epoch==0的时候，val似乎只会跑1个batch，不知道为什么</span></span><br><span class="line">        aaa = pl.EvalResult()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        score = outputs.score</span><br><span class="line">        self.logger.experiment.add_scalar(<span class="string">'score'</span>, score, global_step=self.current_epoch) <span class="comment"># 注意后面的self.current_epoch很重要</span></span><br><span class="line">        ...</span><br><span class="line">    	aaa = pl.EvalResult(checkpoint_on=torch.from_numpy(score))</span><br><span class="line">    <span class="keyword">return</span> aaa</span><br></pre></td></tr></table></figure>
+<p>有几个需要注意的点:</p>
+<ul>
+<li><code>.log</code>函数仅仅用来log的，虽然使用这个函数之后，能够通过<code>result[&#39;XXX&#39;]</code>来访问，但是并不推荐，我没用过</li>
+<li>建议这种： <code>result.score = score.detach().cpu().numpy()</code>，如果等号右边是一个<code>Tensor()</code>，会报错<code>KeyError</code>，不知道为啥，可能是BUG（当前pytorch-lightning版本是v0.9.0），所以直接变成<code>ndarray</code>在操作</li>
+<li>不知道为什么，上图中，如果我直接在下面的函数中<code>return outputs</code>（即把输入直接送出去），会报错，所以在后面重新实例了一个，不清楚有什么影响，目前还没看到影响。</li>
+<li><code>checkpoint_on</code>参数需要的是<code>Tensor</code>类型，我直接从<code>numpy</code>转换了，目前没有看到有什么影响，可以正常跑</li>
+<li>建议在<code>_epoch_end()</code>函数里就不用<code>Train/EvalResult</code>来做<code>.log</code>了，而是直接使用<code>logger</code>吧，上面的代码中，默认是<code>tensorboard</code>的函数，查一下API就好</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://github.com/PyTorchLightning/pytorch-lightning/issues/3167" target="_blank" rel="noopener">https://github.com/PyTorchLightning/pytorch-lightning/issues/3167</a></p>
+<p><a href="https://pytorch-lightning.readthedocs.io/en/stable/results.html" target="_blank" rel="noopener">https://pytorch-lightning.readthedocs.io/en/stable/results.html</a> （Docs 写的不清楚，没说不能用Tensor赋值，对应上面第二点）</p>
+</blockquote>
+<h3 id="优化器、学习率衰减策略"><a href="#优化器、学习率衰减策略" class="headerlink" title="优化器、学习率衰减策略"></a>优化器、学习率衰减策略</h3><ul>
+<li><p><a href="[https://pytorch-lightning.readthedocs.io/en/stable/api/pytorch_lightning.callbacks.lr_logger.html?highlight=learning%20rate#learning-rate-logger](https://pytorch-lightning.readthedocs.io/en/stable/api/pytorch_lightning.callbacks.lr_logger.html?highlight=learning rate#learning-rate-logger">Learning Rate Logger</a>)</p>
+<p>不知道Log到哪去了，按照这个写了一下，没找到log到哪去了</p>
+</li>
+<li><p>自动找合适的lr</p>
+<p>没用过，mark一下，<a href="https://pytorch-lightning.readthedocs.io/en/stable/lr_finder.html" target="_blank" rel="noopener">点这里</a>，还有可以自己找最大的batch size的函数，自己去查doc吧</p>
+</li>
+</ul>
+<ul>
+<li>如何设置optimizer和学习率衰减策略，<a href="https://pytorch-lightning.readthedocs.io/en/stable/lightning-module.html#configure-optimizers" target="_blank" rel="noopener">点这里</a></li>
+</ul>
+<h3 id="load-weight出问题的各种情况"><a href="#load-weight出问题的各种情况" class="headerlink" title="load weight出问题的各种情况"></a><code>load weight</code>出问题的各种情况</h3><blockquote>
+<p>很好的一个理解这种情况的教程：<a href="https://zhuanlan.zhihu.com/p/53927068" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/53927068</a></p>
+</blockquote>
+<p>可能会报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt; myModel = Model_1() <span class="comment">#Model_1继承自 nn.Module 类</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt; myModel.load_state_dict(torch.load(PATH))</span></span><br><span class="line">-----------------------------------------------</span><br><span class="line">RuntimeError: Error(s) in loading state_dict for smallCNN:</span><br><span class="line">	Missing key(s) in state_dict: "net_1.0.weight", "net_1.0.bias", "net_1.2.weight", "net_1.2.bias", "net_1.2.running_mean", "net_1.2.running_var", "net_1.4.weight", "net_1.4.bias", "net_1.6.weight", "net_1.6.bias", "net_1.6.running_mean", "net_1.6.running_var", "net_1.8.weight", "net_1.8.bias", "net_1.10.weight", "net_1.10.bias", "net_1.10.running_mean", "net_1.10.running_var", "net_2.0.weight", "net_2.0.bias". </span><br><span class="line">	Unexpected key(s) in state_dict: "epoch", "global_step", "pytorch-lightning_version", "checkpoint_callback_best_model_score", "checkpoint_callback_best_model_path", "optimizer_states", "lr_schedulers", "state_dict", "hparams_name", "hyper_parameters".</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>Missing key(s) in state_dict</code> 表示其后面跟着的参数，在我们定义的<code>myModel</code>里有，但是在我们<code>load</code>进来的<code>state_dict</code>是没有对应的参数</p>
+<p>这里没有对应的参数，有可能是名字没有对上，比如我们load 进来的可能名字是<code>module.net_1.0.weight</code>，但是我们现在用的模型的对应这一个参数的名字却是<code>net_1.0.weight</code>。（上面的链接解释了为什么会出现一些前缀）</p>
+<p>这里我觉的报错逻辑是：既然我想load参数，那么我网络的权重之类的很重要，所以要是程序load进来的数据里没找到对应的，就是很严重的问题了，就会报错。如果后续确定，Miss的那些确实不是我们想要的，可以添加一个参数<code>strict=False</code>，忽略miss的键</p>
+<p>（那么解决这里的问题就简单了，直接在load的进来的数据里，把对应的键名给改了就行了，如把<code>module.net_1.0.weight</code>改成<code>net_1.0.weight</code>，这样就能和我们新的<code>myModel</code>匹配上了）</p>
+<p>解决方式（参考代码）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># original saved file</span></span><br><span class="line">state_dict = torch.load(PATH)</span><br><span class="line"><span class="comment"># create new OrderedDict that does not contain `module.`(prefix)</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line">new_state_dict = OrderedDict()</span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> state_dict.items():</span><br><span class="line">    name = k[<span class="number">7</span>:] <span class="comment"># remove `module.` 这里 model. 的长度是7</span></span><br><span class="line">    new_state_dict[name] = v</span><br><span class="line"><span class="comment"># load params</span></span><br><span class="line">model.load_state_dict(new_state_dict)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Unexpected key(s) in state_dict</code>表示load进来的数据里面，有后面这些东西，但是我们目前定义的模型<code>myModel</code>并不需要这样的数据，不知道应该把这些数据分配给谁。</p>
+</li>
+</ul>
+<h4 id="本质是什么？"><a href="#本质是什么？" class="headerlink" title="本质是什么？"></a>本质是什么？</h4><p>理解了这个，就知道为什么报错了。</p>
+<ul>
+<li><p><code>nn.Module</code>保存下来的<code>ckpt</code>(其他形式应该如此，我没有尝试)是什么？</p>
+<p>是<strong>有序字典（OrderedDict）</strong>（这是什么呢？我还没有看，反正暂时知道和下面的不一样就行了）</p>
+<p>在本节开始的博客里，可以看到，如果定义网络层的时候的时候使用了ModuleList来又一次进行组织，就可能会添加前缀，保存成<code>.ckpt</code>的时候前缀就会保留，我感觉<code>pl.LightningModule</code>里面在封装得时候可能在哪里调用了ModuleList，导致出现了前缀load错误。</p>
+</li>
+<li><p><code>pl.LightningModule</code>保存下来的<code>.ckpt</code>是什么？</p>
+<p>是<strong>普通字典</strong></p>
+<p>在<code>pl.LightningModule</code>中一定将这个对应的<code>nn.Module</code>的函数<code>torch.save(model.state_dict(), PATH)</code>封装了一下，默认情况下，使用<code>TrainResulut(minimus=loss, checkpoint_on=Tensor)</code>或者<code>EvalResult(checkpoint_on=Tensor)</code>来监控某一个Tensor并自动保存数据文件<code>.ckpt</code></p>
+<p>中，包含了真的好多好多东西，如下图：</p>
+<p><img src="image-20200924225912855.png" alt="image-20200924225912855"></p>
+<p>可以看到，里面包含了使用的<code>pytorch-lightning</code>的版本，保存此文件时，模型跑了多少<code>epoch</code>，此时监控的Tensor(checkpoint_on=)的值是多少，文件保存的位置在哪，还有很多，可以自己load进来看看，牛逼！好像要啥有啥！</p>
+<p>而其中可以被<code>nn.Module</code>加载的权重，却保存在了上图的<code>state_dict</code>中，可以看到，这是一个<code>OrderedDict</code>类型。因此，将这个东西传给我们的模型，是我们的当务之急。</p>
+</li>
+<li><p>那么就会出现下面的交叉load情况</p>
+<ul>
+<li><p>使用<code>pl.LighyningModule</code>保存<code>.ckpt</code>，却在继承<code>nn.Module</code>的模型中load参数</p>
+<p>这就是我遇到的情况：那么这种情况里，方式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">self.pre_CNN_here = Model.lstmSmall.smallCNN(<span class="number">256</span>) <span class="comment"># 注意这里类Model.lstmSmall.smallCNN()继承自nn.Module</span></span><br><span class="line"><span class="comment"># 把 pl.LightningModule 保存的 ckpt load进来，可以debug一下，看看里面哪些很重要的key</span></span><br><span class="line">ori_state_dict = torch.load(model_path)</span><br><span class="line"><span class="comment"># 这里创建一个空的OrderedDict()，来取出来我们load进来的字典里'state_dict'的网络参数</span></span><br><span class="line">new_state_dict = OrderedDict()</span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> ori_state_dict[<span class="string">'state_dict'</span>].items():</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'pre_CNN_here'</span> <span class="keyword">in</span> k: <span class="comment"># 这是我的前缀，要把这个删掉</span></span><br><span class="line">        name = k[<span class="number">13</span>:] <span class="comment"># remove 'pre_CNN_here.', 这里 pre_CNN_here. 的长度是7</span></span><br><span class="line">        new_state_dict[name] = v</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">        name = k</span><br><span class="line">        new_state_dict[name] = v</span><br><span class="line">self.pre_CNN_here.load_state_dict(new_state_dict)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用<code>pl.LighyningModule</code>保存<code>.ckpt</code>，在继承<code>pl.LighyningModule</code>的模型中load参数</p>
+<p>这里也遇到了，<em>但是最后用前一个方法解决了</em>。</p>
+<p>在我的情况中，我遇到了本节刚开始的错误，每个层都添加了新的前缀，然后不能匹配key导致不能传入参数，这里我翻阅了源代码，发现如果需要按照上面的思想进行前缀的修改，需要对源代码进行修改(因为<code>load_from_checkpoint</code>接受的是<code>path</code>参数而不是<code>Dict</code>)，大概在源码中<code>pl_load</code>之后对<code>checkpoint</code>按照上面的思想进行操作，不同的是我们需要将去掉了前缀的<code>new_state_dict</code>赋值给<code>ori_state_dict[&#39;state_dict&#39;]</code>，即</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">... </span> <span class="comment"># 这里是处理前缀的过程，类似上面的</span></span><br><span class="line">ori_state_dict[<span class="string">'state_dict'</span>] = new_state_dict</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用<code>nn.Module</code>的<code>torch.save(model.state_dict(), PATH)</code>保存<code>.ckpt</code>，在继承<code>nn.Module</code>的模型中load参数</p>
+<p>这里要是遇到前缀的问题，可以按照上面的方式进行解决，也要注意<code>map_location</code>参数，看看是不是在不同的设备上load了参数，这里可以通过上面的链接进行学习</p>
+</li>
+<li><p>使用<code>nn.Module</code>的<code>torch.save(model.state_dict(), PATH)</code>保存<code>.ckpt</code>，在继承<code>pl.LighyningModule</code>的模型中load参数</p>
+<p>没遇到过：这里应该是可以直接创建一个新的字典，按照对应的组成形式，但是需要看看源码，好像里面有一些必须有的key，另外也要注意，<code>(pl.LightningModule).load_from_checkpoint()</code>函数接受数据文件的形式是仅接受path，也就是说要不改源码，要不按照其格式（必须有的key）重新保存一下。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Model-1包含-Model-2，同时Model-1中还有新的层"><a href="#Model-1包含-Model-2，同时Model-1中还有新的层" class="headerlink" title="Model 1包含 Model 2，同时Model 1中还有新的层"></a>Model 1包含 Model 2，同时Model 1中还有新的层</h4><p>遇到这种情况，往往需要在model 1的<code>__init__()</code>函数中load Model 2 中的部分或者全部权重，在我的情况中，我load了全部model2的预训练参数，作为model 1中的一层或者几层，然后主要训练model1中新的层</p>
+<h2 id="不太清楚的坑"><a href="#不太清楚的坑" class="headerlink" title="不太清楚的坑"></a>不太清楚的坑</h2><ul>
+<li><code>on_train_epoch_end()</code>和<code>trianing_epoch_end()</code>两者有什么区别？后者的函数参数默认是<code>training_step()</code>的输出<code>result(TrainResult类)</code>，但是前者的参数不知道怎么传进去欸，也没看到怎么用，为什么用这个函数。</li>
+<li><code>CallBack</code>是什么，应该怎么理解？</li>
+</ul>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Bug/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Bug
+                
+            </div>
+        </a>
+    
+    
+        <a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Trick/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Trick</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Pengyang &copy; 2020 
+            <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="noopener">wikitten</a>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

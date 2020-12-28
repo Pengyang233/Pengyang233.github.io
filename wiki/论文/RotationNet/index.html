@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>RotationNet | Pengyang&#39;s wiki</title>
+    
+    
+        <meta name="keywords" content="RotationNet" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="RotationNet: Joint Object Categorization and Pose Estimation Using Multiviews from Unsupervised Viewpoints严格来说，文中提出的不是一个网络，更像是一种框架，其中的backbone可以随意替换。 本文基于Mutiviews 的3D物体识别，能够识别物体的pose（本文中能够识别物体的viewpo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RotationNet">
+<meta property="og:url" content="http://yoursite.com/wiki/%E8%AE%BA%E6%96%87/RotationNet/index.html">
+<meta property="og:site_name" content="Pengyang&#39;s wiki">
+<meta property="og:description" content="RotationNet: Joint Object Categorization and Pose Estimation Using Multiviews from Unsupervised Viewpoints严格来说，文中提出的不是一个网络，更像是一种框架，其中的backbone可以随意替换。 本文基于Mutiviews 的3D物体识别，能够识别物体的pose（本文中能够识别物体的viewpo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/wiki/%E8%AE%BA%E6%96%87/RotationNet/image-20200831175603277.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E8%AE%BA%E6%96%87/RotationNet/image-20200831214122858.png">
+<meta property="article:published_time" content="2020-12-28T07:16:00.974Z">
+<meta property="article:modified_time" content="2020-12-28T07:16:00.974Z">
+<meta property="article:author" content="Pengyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/wiki/%E8%AE%BA%E6%96%87/RotationNet/image-20200831175603277.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Pengyang&#39;s wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pengyang&#39;s wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-up fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Liunx
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Docker与CUDA
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">CUDA一般知识</a></li>  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/Docker%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">Docker一般知识</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/Liunx/tmux_zsh/">tmux_zsh</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">常用命令</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98/">服务器问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            其它
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/">Git和Github</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Vscode/">Vscode</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo搭建博客</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            待分类
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/English/">English</a></li>  <li class="file"><a href="/wiki/%E4%B9%A6%E5%8D%95/">书单</a></li>  <li class="file"><a href="/wiki/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据分析
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/">一些工具</a></li>  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/GAN/">GAN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/">RNN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Trick/">Trick</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E4%BC%98%E8%B4%A8Blog%E7%BF%BB%E8%AF%91/">优质Blog翻译</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            编程
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Latex
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/">一些操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E5%B8%B8%E7%94%A8%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%95%B4%E7%90%86/">常用数学符号整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Matlab
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E6%B3%A8%E6%84%8F/">注意</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/Conda_and_pip/">Conda_and_pip</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/">python通用知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Pytorch
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/AnalyseTool/">AnalyseTool</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Bug/">Bug</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/">Lightning</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/parameters/">parameters</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Tensorflow
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Tensorflow/Bug/">Bug</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            论文
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/BilinearPooling/">BilinearPooling</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/Identification&Verification/">Identification&Verification</a></li>  <li class="file active"><a href="/wiki/%E8%AE%BA%E6%96%87/RotationNet/">RotationNet</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            课程笔记（填坑）
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            cs231n
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/">Lecture2</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture3/">Lecture3</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/%E5%BA%8F/">序</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-论文/RotationNet" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/%E8%AE%BA%E6%96%87/RotationNet/">
+            <time datetime="2020-12-28T07:16:00.974Z" itemprop="datePublished">2020-12-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            RotationNet
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RotationNet-Joint-Object-Categorization-and-Pose-Estimation-Using-Multiviews-from-Unsupervised-Viewpoints"><span class="toc-number">1.</span> <span class="toc-text">RotationNet: Joint Object Categorization and Pose Estimation Using Multiviews from Unsupervised Viewpoints</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建模过程（自己想的）"><span class="toc-number">1.0.1.</span> <span class="toc-text">建模过程（自己想的）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#模型和训练过程"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">模型和训练过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考"><span class="toc-number">1.0.2.</span> <span class="toc-text">思考</span></a></li></ol></li></ol></li></ol>
+                </div>
+            
+        
+        
+            <h1 id="RotationNet-Joint-Object-Categorization-and-Pose-Estimation-Using-Multiviews-from-Unsupervised-Viewpoints"><a href="#RotationNet-Joint-Object-Categorization-and-Pose-Estimation-Using-Multiviews-from-Unsupervised-Viewpoints" class="headerlink" title="RotationNet: Joint Object Categorization and Pose Estimation Using Multiviews from Unsupervised Viewpoints"></a>RotationNet: Joint Object Categorization and Pose Estimation Using Multiviews from Unsupervised Viewpoints</h1><p>严格来说，文中提出的不是一个网络，更像是一种框架，其中的backbone可以随意替换。</p>
+<p>本文基于Mutiviews 的3D物体识别，能够识别物体的pose（本文中能够识别物体的viewpoint位置，即假设输入的view num数量为10，网络能够预测出是哪一个viewpoint）</p>
+<h3 id="建模过程（自己想的）"><a href="#建模过程（自己想的）" class="headerlink" title="建模过程（自己想的）"></a>建模过程（自己想的）</h3><p>首先，我们的问题是，给定的来自于第$i$个视角的图像，我们希望模型能够预测这个图像属于某一个类别$c$的概率：<br>$$<br>P(\hat{y}=c| \bf{x},v)<br>$$<br>在这里，作者简化了问题，固定视角$v$，即预测该输入图像在此视角下的属于类别$c$的概率：<br>$$<br>P(\hat{y}=c|\bf{x}, v=j)<br>$$<br>为了实现上面的建模，作者使用了M个Softmax Loss（M表示视角总数），每一个Loss预测此视角下的样本分类概率（即上式）。</p>
+<p>但是这样就出现了一个问题：如果样本实际来自于第$i$个视角，那么在第$j$个视角Loss下进行预测，真实的分类应该是哪一个呢？为此，作者添加了一个新的类别，即“不属于此视角类(incorrect view)”，表示若真实图像不是此视角的图像，那么该类的概率应该为1。即理想情况下，应该有 ($x_i$表示样本真实来自于第$i$个视角。$y$表示真实样本的类别)：<br>$$<br>P(\hat{y}=y|\bf{x_i},v=i)=1<br>$$<br>以及<br>$$<br>P(\hat{y}= N+1|\bf{x_i},v\ne i)=1<br>$$<br>剩下的概率都为0。</p>
+<blockquote>
+<p>注意：上面$v$表示第$v$视角（个）的Softmax Loss</p>
+</blockquote>
+<h4 id="模型和训练过程"><a href="#模型和训练过程" class="headerlink" title="模型和训练过程"></a>模型和训练过程</h4><p><img src="image-20200831175603277.png" alt="训练过程"></p>
+<ul>
+<li><p>上图中的CNN实际上是一个backbone，对于不同的视角（view），它们是共享权重的；</p>
+</li>
+<li><p>假设，使用的数据库中，总计有N类样本，每类样本有M个视角（即view_num=M），为了实现对于pose的预测，作者在模型中设置了M个Softmax Loss（对应M个view num），这样，每次输入一张图像，就会得到M个Loss<a href="https://github.com/VIPLab-Yang/Lab-Notification" target="_blank" rel="noopener">VIPLab-Yang/Lab-Notification: Lab Notification (github.com)</a></p>
+</li>
+<li>对于分类来说，作者添加了一类：incorrect view 类，即总计有N+1类，此类表示当前的输入图像，不属于这一类视角的概率，其他N类表示当前图像属于该类样本的概率<ul>
+<li>即，对于第$j$个Softmax Loss的输出，若incorrect view类的概率高，则表示此输入图像不属于第$j$个视角，若其他的分类概率高，则表示此输入图像来自于此视角，且其样本的分类为概率高的那类</li>
+<li>即理想情况下，这M的Softmax Loss，有M-1个中的incorrect view 类概率最高，剩下的那一个的分类表示样本图像的真实类别。</li>
+</ul>
+</li>
+<li>那么输入一张图像之后，在每一个Loss中（共计M个），取最大概率的类别，表示对此输入图像的一种分类，如上图中，view 2，它的3个loss中最大的概率对应类依次是：i_view ( 代表incorrect_view类）, car, i_view。即代表，这个图象并不来自于第1，3个视角，而是来自于第二个视角，并且其所属的类别是car。</li>
+<li>考虑如下的理想情况下的label，直白点，下面的 $p^{(j)}_{j,k}$ 表示的是第$j$个Loss的输出，$k$表示此Loss对于这张图像的分类预测结果，$k=N+1$表示incorrect view类，$i$表示此图实际来自于第$i$个视图。<ul>
+<li><img src="image-20200831214122858.png" alt="image-20200831214122858" style="zoom:80%;" /></li>
+<li>这里需要注意到，对于任何<strong>一个</strong> Softmax Loss，其输出是一个向量vec，len(vec)=类别数（本文中是N+1），对应位置的上的数值表示分到此类的概率，所有位置的值相加为1。</li>
+</ul>
+</li>
+</ul>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>这种能说是无监督的学习到了pose信息吗？而更像是以一种巧妙的方式，添加了一个对pose的监督（即增加一类，并且使用M个Loss表示对应的视角，这样对于各个loss的label实际上也能很容易的得到）</p>
+<p>这也算是一种新的添加监督的方式，虽然感觉有点笨重。</p>
+<p>这种巧妙的方式值得学习。</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/wiki/%E8%AE%BA%E6%96%87/Identification&Verification/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Identification&amp;Verification
+                
+            </div>
+        </a>
+    
+    
+        <a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/parameters/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">parameters</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Pengyang &copy; 2020 
+            <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="noopener">wikitten</a>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

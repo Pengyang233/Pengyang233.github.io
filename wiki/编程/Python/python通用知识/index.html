@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>python通用知识 | Pengyang&#39;s wiki</title>
+    
+    
+        <meta name="keywords" content="python通用知识" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="这个笔记主要是学习这个链接下的内容记录的一些笔记，主要是我不怎么用、不会用、想不起来用的东西。 代码规范 如无特殊情况，文件一律使用 UTF-8 编码 如无特殊情况，文件头部必须加入 #-*-coding:utf-8-*- 每行代码金陵不超过80个字符，最多不能超120 缩进为4个空格 自然语言使用双引号，机器标示使用单引号，正则表达式使用双引号，文档字符串（doctring）使用三个双引号&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python通用知识">
+<meta property="og:url" content="http://yoursite.com/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Pengyang&#39;s wiki">
+<meta property="og:description" content="这个笔记主要是学习这个链接下的内容记录的一些笔记，主要是我不怎么用、不会用、想不起来用的东西。 代码规范 如无特殊情况，文件一律使用 UTF-8 编码 如无特殊情况，文件头部必须加入 #-*-coding:utf-8-*- 每行代码金陵不超过80个字符，最多不能超120 缩进为4个空格 自然语言使用双引号，机器标示使用单引号，正则表达式使用双引号，文档字符串（doctring）使用三个双引号&amp;qu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-28T07:16:00.966Z">
+<meta property="article:modified_time" content="2020-12-28T07:16:00.966Z">
+<meta property="article:author" content="Pengyang">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Pengyang&#39;s wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pengyang&#39;s wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-up fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Liunx
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Docker与CUDA
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">CUDA一般知识</a></li>  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/Docker%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">Docker一般知识</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/Liunx/tmux_zsh/">tmux_zsh</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">常用命令</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98/">服务器问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            其它
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/">Git和Github</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Vscode/">Vscode</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo搭建博客</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            待分类
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/English/">English</a></li>  <li class="file"><a href="/wiki/%E4%B9%A6%E5%8D%95/">书单</a></li>  <li class="file"><a href="/wiki/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据分析
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/">一些工具</a></li>  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/GAN/">GAN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/">RNN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Trick/">Trick</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E4%BC%98%E8%B4%A8Blog%E7%BF%BB%E8%AF%91/">优质Blog翻译</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            编程
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Latex
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/">一些操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E5%B8%B8%E7%94%A8%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%95%B4%E7%90%86/">常用数学符号整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Matlab
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E6%B3%A8%E6%84%8F/">注意</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/Conda_and_pip/">Conda_and_pip</a></li>  <li class="file active"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/">python通用知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Pytorch
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/AnalyseTool/">AnalyseTool</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Bug/">Bug</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/">Lightning</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/parameters/">parameters</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Tensorflow
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Tensorflow/Bug/">Bug</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            论文
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/BilinearPooling/">BilinearPooling</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/Identification&Verification/">Identification&Verification</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/RotationNet/">RotationNet</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            课程笔记（填坑）
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            cs231n
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/">Lecture2</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture3/">Lecture3</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/%E5%BA%8F/">序</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-编程/Python/python通用知识" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/">
+            <time datetime="2020-12-28T07:16:00.966Z" itemprop="datePublished">2020-12-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            python通用知识
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#代码规范"><span class="toc-number">1.</span> <span class="toc-text">代码规范</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本数据类型"><span class="toc-number">2.</span> <span class="toc-text">基本数据类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串编码问题"><span class="toc-number">3.</span> <span class="toc-text">字符串编码问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据类型的转换"><span class="toc-number">4.</span> <span class="toc-text">数据类型的转换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">5.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数的传值问题，"><span class="toc-number">5.0.1.</span> <span class="toc-text">函数的传值问题，</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#匿名函数"><span class="toc-number">6.</span> <span class="toc-text">匿名函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#迭代器和生成器"><span class="toc-number">7.</span> <span class="toc-text">迭代器和生成器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#迭代器"><span class="toc-number">7.1.</span> <span class="toc-text">迭代器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list-的生成式语法-非传统方式"><span class="toc-number">7.2.</span> <span class="toc-text">list 的生成式语法(非传统方式)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成器"><span class="toc-number">7.3.</span> <span class="toc-text">生成器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#迭代器和生成器的综合例子"><span class="toc-number">7.4.</span> <span class="toc-text">迭代器和生成器的综合例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#面向对象编程"><span class="toc-number">8.</span> <span class="toc-text">面向对象编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#面向对象的两个基本概念"><span class="toc-number">8.0.1.</span> <span class="toc-text">面向对象的两个基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面向对象的三大特性"><span class="toc-number">8.0.2.</span> <span class="toc-text">面向对象的三大特性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#类"><span class="toc-number">9.</span> <span class="toc-text">类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于类"><span class="toc-number">9.0.1.</span> <span class="toc-text">关于类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类的继承"><span class="toc-number">9.0.2.</span> <span class="toc-text">类的继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类的多态"><span class="toc-number">9.0.3.</span> <span class="toc-text">类的多态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于类的访问控制"><span class="toc-number">9.0.4.</span> <span class="toc-text">关于类的访问控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类专有方法："><span class="toc-number">9.0.5.</span> <span class="toc-text">类专有方法：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模块与包"><span class="toc-number">10.</span> <span class="toc-text">模块与包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模块的导入"><span class="toc-number">10.0.1.</span> <span class="toc-text">模块的导入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主模块和非主模块"><span class="toc-number">10.0.2.</span> <span class="toc-text">主模块和非主模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包"><span class="toc-number">10.0.3.</span> <span class="toc-text">包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域"><span class="toc-number">10.0.4.</span> <span class="toc-text">作用域</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python的Magic-Method"><span class="toc-number">11.</span> <span class="toc-text">Python的Magic Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常见的魔术方法"><span class="toc-number">11.0.1.</span> <span class="toc-text">常见的魔术方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象的描述器："><span class="toc-number">11.0.2.</span> <span class="toc-text">对象的描述器：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义容器-Container"><span class="toc-number">11.0.3.</span> <span class="toc-text">自定义容器(Container)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运算符相关的魔术算法（加减乘除比大小等）"><span class="toc-number">11.0.4.</span> <span class="toc-text">运算符相关的魔术算法（加减乘除比大小等）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式"><span class="toc-number">12.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#枚举类"><span class="toc-number">13.</span> <span class="toc-text">枚举类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#元类"><span class="toc-number">14.</span> <span class="toc-text">元类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#线程和进程"><span class="toc-number">15.</span> <span class="toc-text">线程和进程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#闭包"><span class="toc-number">16.</span> <span class="toc-text">闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包应用实例和应用场景"><span class="toc-number">16.0.1.</span> <span class="toc-text">闭包应用实例和应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包和类的区别"><span class="toc-number">16.0.2.</span> <span class="toc-text">闭包和类的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#装饰器"><span class="toc-number">17.</span> <span class="toc-text">装饰器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python变量查找LEGB原则"><span class="toc-number">18.</span> <span class="toc-text">Python变量查找LEGB原则</span></a></li></ol>
+                </div>
+            
+        
+        
+            <p>这个笔记主要是学习<a href="https://www.readwithu.com/" target="_blank" rel="noopener">这个链接</a>下的内容记录的一些笔记，主要是我不怎么用、不会用、想不起来用的东西。</p>
+<h1 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h1><ul>
+<li>如无特殊情况，文件一律使用 UTF-8 编码</li>
+<li>如无特殊情况，文件头部必须加入 <code>#-*-coding:utf-8-*-</code></li>
+<li>每行代码金陵不超过80个字符，最多不能超120</li>
+<li>缩进为4个空格</li>
+<li>自然语言使用双引号，机器标示使用单引号，正则表达式使用双引号，文档字符串（doctring）使用三个双引号<code>&quot;&quot;&quot;...&quot;&quot;&quot;</code></li>
+<li>空行<ul>
+<li>模块级函数和类定义之间空两行</li>
+<li>类成员函数之间空一行</li>
+</ul>
+</li>
+<li>命名规范<ul>
+<li>模块尽量使用小写命名，首字母保持小写，名称中尽量不要含有下划线</li>
+<li>类名使用驼峰(ClassName)命名风格，首字母大写，私有类可以用一个下划线开头</li>
+<li>变量名和函数名小写，如果有多个单词，用下划线分割</li>
+<li>常量采用全大写，如有多个单词，使用下划线分割</li>
+</ul>
+</li>
+</ul>
+<h1 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h1><ul>
+<li><p>字符串，不能在同级引号之间直接加同级引号，但是可以添加转义字符，如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str = <span class="string">'a'</span><span class="string">b'c'</span>  <span class="comment">#错</span></span><br><span class="line">str = <span class="string">"a'b'c"</span>  <span class="comment">#对</span></span><br><span class="line">str = <span class="string">"a"</span><span class="string">b"c"</span>  <span class="comment">#错</span></span><br><span class="line">str = <span class="string">'''a"b"c'''</span> <span class="comment">#对</span></span><br><span class="line">str = <span class="string">'a\'b\'c   #对，注意转义字符方向</span></span><br></pre></td></tr></table></figure>
+<p>另外，三引号<code>&#39;&#39;&#39;...&#39;&#39;&#39;</code>是可以分行的</p>
+</li>
+<li><p>浮点数</p>
+<ul>
+<li>两个整数相除的结果会变成浮点数(float)，无论是若否整除。</li>
+<li>一定要非常小心计算机中的浮点数，计算机中的浮点数表达本身是不准确的，因为二进制的原因，有事只能非常接近这个数字，要注意积累误差的影响。如<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; print(<span class="number">0.55</span>+<span class="number">0.4</span>)</span><br><span class="line">&gt;&gt; <span class="number">0.95000000000000001</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>空值<code>None</code>，值为空值的变量type()为<code>NoneType</code></li>
+</ul>
+<h1 id="字符串编码问题"><a href="#字符串编码问题" class="headerlink" title="字符串编码问题"></a>字符串编码问题</h1><ul>
+<li>ASCII编码：最早的编码，编码表的值在0-255之间，用来表示大小写英文字母、数字和一些符号，每个编码占用一个字节</li>
+<li>GB2312编码：中国制定的包括中文的编码，每个编码至少占用两个字节，并且不和ASCII编码冲突（所以可想而知，日文韩文也肯定有自己的编码）</li>
+<li>Unicode编码：统一所有语言到这个编码中，通常两个字节表示一个字符，原有的英文编码从单字节变成双字节，只需要把高字节全部填为 0 就可以。在python中，Unicode编码用<code>u&#39;...&#39;</code>来表示，但是在python3中，字符串默认是以这种方式编码的，因此不需要前面加’u’</li>
+<li><p>由于python也是文本文件，如果其中含有中文，一定要使用UTF-8编码方式，当Python 解释器读取源代码时，为了让它按 UTF-8 编码读取，我们通常在文件开头写上这两行：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br></pre></td></tr></table></figure>
+<p>  第一行注释是为了告诉 Linux/OS X 系统，这是一个 Python 可执行程序，Windows 系统会忽略这个注释；</p>
+<p>  第二行注释是为了告诉 Python 解释器，按照 UTF-8 编码读取源代码，否则，你在源代码中写的中文输出可能会有乱码。</p>
+<p>  申明了 UTF-8 编码并不意味着你的 .py 文件就是 UTF-8 编码的，必须并且要确保文本编辑器正在使用 UTF-8 without BOM 编码</p>
+</li>
+</ul>
+<h1 id="数据类型的转换"><a href="#数据类型的转换" class="headerlink" title="数据类型的转换"></a>数据类型的转换</h1><ul>
+<li>记录一个关于str转int的<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; str = <span class="string">'123'</span></span><br><span class="line">&gt;&gt; a = int(str)</span><br><span class="line">&gt;&gt; print(a)</span><br><span class="line"></span><br><span class="line">&gt;&gt; <span class="number">123</span> <span class="comment">#且为int型</span></span><br></pre></td></tr></table></figure>
+但是如果上面的<code>str = &#39;88.88&#39;</code>，在第二步会报错。</li>
+</ul>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><ul>
+<li>不带<code>return</code>的函数会返回<code>None</code></li>
+<li>python定义函数的时候可以指定<em>只能接受关键字参数</em>，此时传入参数的时候必须要写明关键字。</li>
+</ul>
+<h3 id="函数的传值问题，"><a href="#函数的传值问题，" class="headerlink" title="函数的传值问题，"></a>函数的传值问题，</h3><ul>
+<li><strong>在 Python 中，字符串，整形，浮点型，tuple 是不可更改的对象，而 list ， dict 等是可以更改的对象。</strong></li>
+<li>当不可更改的对象传入函数的时候，在函数中如果修改了这个对象，那么如果不用return传出，则这个修改无效。</li>
+<li>当可更改对象传入函数的时候，在函数对其内部值的修改会真正改变这个值，此时不需要return，在外界查看也是改变之后的。</li>
+<li>更具体的解释可以参看<a href="https://www.readwithu.com/Article/PythonBasis/python6/4.html" target="_blank" rel="noopener">这里</a></li>
+</ul>
+<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><ul>
+<li>应用场景：想写的目标函数很短，不想用<code>def</code>的形式去写一个那么长的函数，此时便使用匿名函数（使用<code>lambda</code>创建）</li>
+<li>匿名函数的特点<ul>
+<li><code>lambda</code>只是一个表达式，函数体比正常的函数定义少很多</li>
+<li>有自己的命名空间，且不能访问自有参数列表之外或者全局命名空间里的参数</li>
+</ul>
+</li>
+<li><strong>注意：尽管 lambda 表达式允许你定义简单函数，但是它的使用是有限制的。 你只能指定单个表达式，它的值就是最后的返回值。也就是说不能包含其他的语言特性了， 包括多个语句、条件表达式、迭代以及异常处理等等。</strong></li>
+<li>基本语法  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lambda</span>[arg1, [,arg2,...argN]]: expression</span><br></pre></td></tr></table></figure>
+  示例：  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sum = <span class="keyword">lambda</span> num1, num2: num1 + num2;</span><br><span class="line">print(sum(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">------------</span><br><span class="line">&gt;&gt; <span class="number">3</span></span><br></pre></td></tr></table></figure></li>
+<li>还有一个需要注意的问题，请看示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">num2 = <span class="number">100</span></span><br><span class="line">sum1 = <span class="keyword">lambda</span> num1: num1 + num2</span><br><span class="line"></span><br><span class="line">num2 = <span class="number">10000</span></span><br><span class="line">sum2 = <span class="keyword">lambda</span> num1: num1 + num2 </span><br><span class="line"></span><br><span class="line">print(sum1(<span class="number">1</span>))</span><br><span class="line">print(sum2(<span class="number">1</span>))</span><br><span class="line">------------------------------</span><br><span class="line">&gt;&gt; <span class="number">10001</span></span><br><span class="line">   <span class="number">10001</span></span><br></pre></td></tr></table></figure>
+原因在于<em>lambda 表达式中的 num2 是一个自由变量，在<strong>运行时绑定值</strong>，而不是定义时就绑定，这跟函数的默认值参数定义是不同的。所以建议还是遇到这种情况还是使用第一种解法。</em></li>
+</ul>
+<h1 id="迭代器和生成器"><a href="#迭代器和生成器" class="headerlink" title="迭代器和生成器"></a>迭代器和生成器</h1><h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li>迭代器，是一个可以记住遍历的位置的对象</li>
+<li>迭代器对象从集合的第一个元素开始访问，直到所有的元素被访问完结束</li>
+<li><strong>迭代器只能前进不能后退</strong></li>
+<li>两个基本方法：<code>iter()</code>和<code>next()</code>，同时字符串、列表、或者元组都可以用来创建一个迭代器</li>
+<li>迭代器的两种遍历方式：<code>for</code> 或者 <code>next()</code></li>
+<li><strong>创建迭代器对象</strong>：<code>iter(可创建迭代器的对象)</code></li>
+<li>举例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">iter1 = iter(list1)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> iter1:</span><br><span class="line">    ······</span><br><span class="line">或者</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> rang(x):</span><br><span class="line">    a = next(iter1)</span><br></pre></td></tr></table></figure>
+<h2 id="list-的生成式语法-非传统方式"><a href="#list-的生成式语法-非传统方式" class="headerlink" title="list 的生成式语法(非传统方式)"></a>list 的生成式语法(非传统方式)</h2></li>
+<li>list 生成式语法为:  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[expr <span class="keyword">for</span> iter_var <span class="keyword">in</span> iterable]</span><br><span class="line">[expr <span class="keyword">for</span> iter_var <span class="keyword">in</span> iterable <span class="keyword">if</span> cond_expr]</span><br></pre></td></tr></table></figure>
+<code>expr</code>表示一个含有<code>iter_var</code>表达式，比如说，<code>expr</code>可以是<code>2*x</code>,那么第一种情况可以是<code>[2*x for x in range(4)]</code>，当然也可以是有几个遍历元素，比如说<code>[x*y for x in range(3) for y in range(8)]</code></li>
+</ul>
+<p>第二种情况中，加入了判断的情况，只有满足要求的<code>iter_var</code>才会被考虑，其余的会舍弃，比如后面可以写成<code>[..... if x%2==0]</code></p>
+<p>无论哪一种情况都要注意，一定在两边有方括号，因为毕竟这个是生成的list。</p>
+<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><ul>
+<li><p>为啥需要生成器？</p>
+<p>考虑一个情况，我希望输出一个斐波那契数列，但是斐波那契数列是无穷的，把这“无穷”的东西生成一个列表或者元组保存下来输出很显然是不现实的，因为没有足够的内存空间去保存”无限”的数据。但是这个数列有一个很明显的特点：就是<strong>后面的元素可以按照一定的规律通过其前面的元素推算出来</strong>。生成器就是干这个的，只需要知道“规律”，可以源源不断地推算出后面的元素，从而节省大量的内存空间。</p>
+</li>
+<li><p><strong>在python中，这种一边循环一边计算的东西，就是生成器（Generator），其主要的特点是函数中使用了<code>yield</code>而没有使用<code>return</code></strong></p>
+</li>
+<li><p>生成器是可以迭代的，它并不把所有的数据存放在内存里，而是实时的生成数据。</p>
+<ul>
+<li><p>跟普通函数不同的是，生成器是一个返回迭代器的函数，只能用于迭代操作，更简单点理解生成器就是一个迭代器。</p>
+</li>
+<li><p>在调用生成器运行的过程中，每次遇<code>yield</code>时函数会暂停并保存当前所有的运行信息，返回<code>yield</code>的值。并在下一次执行<code>next()</code>方法时从当前位置继续运行。</p>
+</li>
+<li><p>生成器表达式使用了“惰性计算”，只有在检索时才被赋值（ evaluated ），所以在列表比较长的情况下使用内存上更有效。也就是说，当你没有检索某一个位置的时候，它自己也不知道这个位置是啥是多少。</p>
+</li>
+</ul>
+</li>
+<li><p>生成器的创建</p>
+<ul>
+<li>方式1（快速式）：<br>  在上面提到的生成式生成列表的方法中，将两边的方括号变成小括号  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gen= (x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>))</span><br></pre></td></tr></table></figure></li>
+<li><p>方式2(函数式)：<br>  在使用函数式创建生成器的时候，函数中是没有<code>return</code>语句的，但是必须有<code>yield</code>语句来告诉外界返回的值。同时<code>yield</code>语句后面还可以继续跟着一些相关的代码。这是因为Generator函数每次遇到<code>next()</code>或者<code>for</code>就执行，遇到<code>yield</code>语句就返回对应的值，<strong>当再次执行的时候就会从上一次返回的<code>yield</code>语句出继续执行函数</strong>，比如说一个斐波那契数列的生成器：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fibon</span><span class="params">(n)</span>:</span></span><br><span class="line">    a = b = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="keyword">yield</span> a</span><br><span class="line">        a, b = b, a + b</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>遍历生成器的元素：<br>上面说了可以认为生成器就是迭代器，那么就可以使用<code>for</code>和<code>next()</code>来进行遍历：   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> gen:</span><br><span class="line">    print(i)</span><br><span class="line">和</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(x):</span><br><span class="line">    print(next(gen))</span><br></pre></td></tr></table></figure></li>
+<li>需要注意的是，如果一个生成器一直<code>next()</code>到没有返回值了的话，会报错，因此<strong>通常需要在generator函数中对错误进行捕获</strong><h2 id="迭代器和生成器的综合例子"><a href="#迭代器和生成器的综合例子" class="headerlink" title="迭代器和生成器的综合例子"></a>迭代器和生成器的综合例子</h2></li>
+</ul>
+<ul>
+<li><p>反向迭代(<code>.reverse()</code>的实现)和<code>zip()</code>函数的使用</p>
+<p>  <a href="https://www.readwithu.com/Article/PythonBasis/python7/5.html" target="_blank" rel="noopener">参考这里</a></p>
+</li>
+</ul>
+<h1 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h1><h3 id="面向对象的两个基本概念"><a href="#面向对象的两个基本概念" class="headerlink" title="面向对象的两个基本概念"></a>面向对象的两个基本概念</h3><p>面向对象大概的意思就是要用分类的眼光去看世界、解决问题的一种方式。</p>
+<ul>
+<li>类</br><br>  用来描述具有相同属性和方法的对象的集合，它定义了该集合中每个对象所有的属性和方法。<strong>对象是类的实例</strong></li>
+<li>对象</br><br>  通过类定义的数据结构来实现<h3 id="面向对象的三大特性"><a href="#面向对象的三大特性" class="headerlink" title="面向对象的三大特性"></a>面向对象的三大特性</h3></li>
+</ul>
+<ul>
+<li>继承</br><br>即一个派生类(derived class)继承基类(base class)的字段和方法。继承也允许把一个派生类的对象作为一个基类对象来对待</li>
+<li>多态</br><br>多态指的是对不同类型的变量进行相同的操作，它会根据对象（或类）的类型的不同而表现出不同的行为</li>
+<li>封装性</br><br>“封装”就是将抽象得到的数据和行为（或功能）相结合，形成一个有机的整体（即类）；封装的目的是增强安全性和简化编程，使用者不必了解具体的实现细节，而只是要通过外部接口，一特定的访问权限来使用类的成员。<h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><h3 id="关于类"><a href="#关于类" class="headerlink" title="关于类"></a>关于类</h3></li>
+<li>类本质是一个变量和函数的集合</li>
+<li>类中的变量称为类的属性，类中的函数称为类方法。</li>
+<li>相比于常用<code>__init__</code>的初始化方式，还有可以不使用这个函数来定义类的(但是这种情况下是可以不实例化类的，直接把类定义出来的本身当作一个“对象”)，此时需要在类函数定义前添加装饰器函数<code>@classmethod</code>，具体可以<a href="https://www.readwithu.com/Article/PythonBasis/python8/3.html" target="_blank" rel="noopener">参考这里</a></li>
+<li><strong>注意</strong>：类是直接不经过实例化直接调用的，这样会改变所有通过此类实例化得到的所有对象（Ps：到目前为止我还没有见过这种使用方式，对这种方式的使用场景和意义存疑）。可参考上一个链接的下一章</li>
+<li>修改实例的任何属性或者方法都不会类产生影响，反之，修改类的属性和方法会对实例的属性和方法有相同的影响，函数的赋值是不加后面的括号的。</li>
+<li>类的初始化函数（构造函数 <code>__init__(self)</code>）在构造实例的时候自动执行。</li>
+<li>在创建实例的时候会调用构造函数，那么在销毁一个实例的时候就会调用<em>析构函数</em>，其语法如下<code>daf __del__(self,[...])</code>，删除实例的代码为<code>del a</code>（假设a为一个实例化的类。）</li>
+<li><strong>在python的版本迭代中，有一个历史遗留问题：新式类和旧式类。这个问题在python2的版本中是有区别的，定义时需要进行指定以区分该类是新式类还是旧式类，然而在python3中，这个区别已经没有了，无论是否指定，定义的类都是新式类。</strong> 具体区别这里不表，遇到时在查资料。<h3 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h3></li>
+<li>可以继承父类中的属性和方法，而不用在自己的类内进行定义，如果子类中有父类的重名的属性和方法，那么会屏蔽父类中的对应东西。</li>
+<li>在使用<code>isinstance(x, y)</code>的时候，如果<code>x</code>是继承<code>y</code>的类，那么会判定为<code>True</code></li>
+<li>在继承父类的时候，子类往往会有<code>super()</code>函数来进行声明：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">son_class</span><span class="params">(father_class)</span>:</span> <span class="comment">#father_class 是 son_class 的父类</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(x,y,z)</span>:</span></span><br><span class="line">        super(son_class,self).__init__(x, y)  <span class="comment">#这里需要保证父类的初始化函数中有关于 x,y 的参数定义</span></span><br><span class="line">        self.z = z</span><br></pre></td></tr></table></figure></li>
+<li>一个子类可以有多个父类，在寻找父类中的方法的时候，是从继承括号中从左向右依次找的。</li>
+<li>待整理，找新的资料再整理。<h3 id="类的多态"><a href="#类的多态" class="headerlink" title="类的多态"></a>类的多态</h3></li>
+<li><strong>有了继承，才会有多态</strong></li>
+<li>待整理，找更好的资料进行整理<h3 id="关于类的访问控制"><a href="#关于类的访问控制" class="headerlink" title="关于类的访问控制"></a>关于类的访问控制</h3>在C++中定义类是有类成员私有还是公有的区别的，然而在python中，本质上是没有提供私有属性等功能的，因此在python中对于属性的访问控制全靠程序员的自觉。</li>
+<li>普遍的习惯：以两个下划线开头的属性（或者方法）（如<code>self.__attr</code>）往往认为是私有属性（或者方法），希望尽量不要在外界直接访问。在定义了双下划线属性（或者方法）之后，python会对这个属性（或者方法）进行一些处理，让人们不能直接通过这个属性（或者方法）名从外界直接访问到。但是可以通过 <code>class_name.__dict__</code>函数来找到这个属性（或者方法）的可以被外界访问到的名字。<h3 id="类专有方法："><a href="#类专有方法：" class="headerlink" title="类专有方法："></a>类专有方法：</h3>一个类在被创建之后，可能或者一定具备的某些方法，它们被称为类的专有方法，它们有：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__init__</code></td>
+<td>构造函数，在实例化时自动调用</td>
+</tr>
+<tr>
+<td><code>__del__</code></td>
+<td>析构函数，删除实例时自动调用</td>
+</tr>
+<tr>
+<td><code>__repr__</code></td>
+<td>打印，转换</td>
+</tr>
+<tr>
+<td><code>__getitem__</code></td>
+<td>按照索引赋值</td>
+</tr>
+<tr>
+<td><code>__len__</code></td>
+<td>获取长度</td>
+</tr>
+<tr>
+<td><code>__cmp__</code></td>
+<td>定义比较运算</td>
+</tr>
+<tr>
+<td><code>__call__</code></td>
+<td>函数调用</td>
+</tr>
+<tr>
+<td><code>__add/sub/mul/div__</code></td>
+<td>定义加/减/乘/除运算</td>
+</tr>
+<tr>
+<td><code>__mod/pow__</code></td>
+<td>定义求余/乘方运算</td>
+</tr>
+</tbody>
+</table>
+<p>当我们想获取一个类的相关信息的时候，我们可以使用如下的方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type(obj)</code></td>
+<td>获取对象的类型</td>
+</tr>
+<tr>
+<td><code>isinstance(obj, type)</code></td>
+<td>判断对象是否为指定的type类型的实例</td>
+</tr>
+<tr>
+<td><code>hasattr(obj, attr)</code></td>
+<td>判断对象是否具有指定属性/方法</td>
+</tr>
+<tr>
+<td><code>getattr(obj, attr[, default])</code></td>
+<td>获取属性/方法的值，要是没有属性则返回<code>default</code>的值（需提前定义），否则会抛出<code>AttributeError</code>异常</td>
+</tr>
+<tr>
+<td><code>setattr(obj, attr, value)</code></td>
+<td>设定该属性/方法的值，类似于<code>obj.attr = value</code></td>
+</tr>
+<tr>
+<td><code>dir(obj)</code></td>
+<td>可以获取相应对象所有属性和方法名的列表。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="模块与包"><a href="#模块与包" class="headerlink" title="模块与包"></a>模块与包</h1><ul>
+<li>类 = 类方法（函数）+ 类属性（变量）</br> 模块 = 变量 + 函数 + 类 </br> 也就是说，模块是函数的扩展</li>
+<li>通俗来说，一个<code>.py</code>文件就是一个模块<h3 id="模块的导入"><a href="#模块的导入" class="headerlink" title="模块的导入"></a>模块的导入</h3></li>
+<li>模块的导入需要使用<code>import</code>方式，导入的模块（文件）在python的搜索路径中，在windows下就是环境变量，搜索路径可以通过<code>sys</code>模块下的<code>print(sys.path)</code>命令进行查看</li>
+<li>仅导入模块中部分属性和方法，使用<code>from mod_name import name1[, name2[, ...nameN]]</code>语句</li>
+<li><code>from mod_name import *</code>：这个语句可以导入该模块中所有的方法和属性，此时不需要在调用模块中的属性和方法的时候可以直接写该属性或者方法的名称，而不用写<code>mod_name.xxx()</code>的形式，<strong>注意这种声明不应该被过多的使用！</strong><h3 id="主模块和非主模块"><a href="#主模块和非主模块" class="headerlink" title="主模块和非主模块"></a>主模块和非主模块</h3></li>
+<li>即<code>if __name__ == &#39;__main__&#39;</code>的作用：如果我直接执行这个模块，那这个判断就是真，该模块为主模块；如果这个模块是被我<code>import</code>调用的，那么这个判断就是假，为非主模块。<h3 id="包"><a href="#包" class="headerlink" title="包"></a>包</h3></li>
+<li>是按照目录来组织模块的方式，也就是说包是一个目录，目录下有很多模块。</li>
+<li>一个目录若为包，必须有<code>__init__.py</code>文件，这个文件可以是空，也可以有代码。如果没有，解释器就会把这个目录当作普通目录来对待。<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3></li>
+<li>作用：控制包内的函数和变量是只能在模块内使用还是可以在外部被调用。</li>
+<li>在python中，上述功能是通过一个下划线前缀 <code>_</code> 来实现的，不带这个前缀的表示这个函数和变量名是公开的(public)，可以被直接引用。（前面说了，这也只是一种习惯，python本质上不能控制）</li>
+<li>类似<code>__xxx__</code>的变量是特殊变量，可以被直接引用，但是是有特殊用途的，比如上面说的<code>__name__</code>，还有<code>__author__</code>也是特殊变量，用来标明作者。</li>
+<li>一般情况下，外部不需要引用的函数全部定义为私有变量，只有外部需要引用的函数才定义为公有的。<h1 id="Python的Magic-Method"><a href="#Python的Magic-Method" class="headerlink" title="Python的Magic Method"></a>Python的Magic Method</h1></li>
+<li>Magic Method: python中使用双下划线包起来的<strong>方法</strong>都统称为“魔术方法”，使用这些魔术方法，我们可以构造出优美的代码，将复杂的逻辑封装成简单的方法。</li>
+<li>查看<strong>类</strong>中有哪些“魔术方法”(<code>dir()</code>)：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(dir(class_name()))</span><br></pre></td></tr></table></figure>
+输出为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__getattribute__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__le__&#39;, &#39;__lt__&#39;, &#39;__module__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;__weakref__&#39;]</span><br></pre></td></tr></table></figure>
+<h3 id="常见的魔术方法"><a href="#常见的魔术方法" class="headerlink" title="常见的魔术方法"></a>常见的魔术方法</h3></li>
+<li>构造(<code>__new__</code>)和初始化(<code>__init__</code>):<ul>
+<li><code>__new__</code>作用是创建并返回这个类的实例，<code>__init__</code>是将传入的参数初始化。</li>
+<li>一个类可以没有<code>__init__</code>，但一定有<code>__new__</code>（是自动就有的，不需你去定义）</li>
+<li><code>__new__</code>总是会返回一个实例，而<code>__init__</code>只能返回<code>None</code>值</li>
+<li>在创建实例过程中，先执行<code>__new__</code>，如果有<code>__init__</code>就执行其中的初始化。</li>
+</ul>
+</li>
+<li>关于<code>__setattr__</code>,<code>__getatr__</code>等省略，需要时再整理，<a href="https://www.readwithu.com/Article/PythonBasis/python10/3.html" target="_blank" rel="noopener">参考</a><h3 id="对象的描述器："><a href="#对象的描述器：" class="headerlink" title="对象的描述器："></a>对象的描述器：</h3>看不懂。。。这个教程里面写的不清楚，还是需要时再整理吧。。<h3 id="自定义容器-Container"><a href="#自定义容器-Container" class="headerlink" title="自定义容器(Container)"></a>自定义容器(Container)</h3></li>
+<li>不可变容器：tuple，string</li>
+<li>可变容器：dict，list</li>
+<li>自定义容器就是自定义上面那种的容器，因为上述的几个容器可能在我们开发的过程中并不够用。</li>
+<li>一个常见的自定义容器往往可以是对现有如list的扩充，添加一些新的功能进去。<h3 id="运算符相关的魔术算法（加减乘除比大小等）"><a href="#运算符相关的魔术算法（加减乘除比大小等）" class="headerlink" title="运算符相关的魔术算法（加减乘除比大小等）"></a>运算符相关的魔术算法（加减乘除比大小等）</h3>略，需要时再整理</li>
+</ul>
+<p><strong>上面说的魔术算法都是定义在类里面的，这里需要注意</strong></p>
+<h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><ul>
+<li>系统学习后整理，<a href="https://www.readwithu.com/Article/PythonBasis/python14/Preface.html" target="_blank" rel="noopener">参看这里</a></li>
+</ul>
+<h1 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h1><ul>
+<li>枚举类型可以看作是一种标签或者一系列的常量的集合，通常用于表示某些特定的有限集合，比如星期、月份、状态等。</li>
+<li>它其实是一个类，相比于其他的类，它不允许直接在类外修改枚举项的值，同时枚举类中有两个相同的key值也是不允许的。</li>
+<li>需要时再整理。<h1 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h1></li>
+<li>我们知道，创建类的时候往往是为了创建类的实例对象而服务，<strong>元类就是用来创建类的，可以认为元类就是类的类。</strong></li>
+<li><p>需要时再整理</p>
+<h1 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h1></li>
+<li><p>一个进程至少有一个线程，可以有多个线程。</p>
+</li>
+<li>需要时再整理</li>
+</ul>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><ul>
+<li><a href="https://juejin.im/entry/5a7d1013f265da4e83265a56" target="_blank" rel="noopener">参考资料</a></li>
+<li>严谨的定义：闭包是一个可以由另一个函数动态生成的函数，并且可以改变和存储函数外创建的变量的值。简单的理解：如果在一个内部函数中，对在外部作用域（但不是全局作用域）的变量进行引用，那么内部函数就被称为闭包。</li>
+<li>可能需要后面《变量查找LEGB原则》的知识</li>
+<li>在需要使用全局变量<code>global</code>的情况下，闭包避免了使用全局变量，此外，闭包允许将函数与其所操作的某些数据（环境）关连起来。</li>
+<li>闭包的特点：有一个函数(外层函数)里面定义了一个新的函数(内层函数)，并且<strong>外层函数的返回值是内层函数</strong>（内层函数可以没有返回值），同时内层函数中必须引用外部函数的局部变量，如<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">A</span><span class="params">()</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">B</span><span class="params">()</span>:</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="keyword">return</span> B</span><br></pre></td></tr></table></figure>
+此时，如果我们在外面执行函数A，即<code>print(A())</code>，输出的返回值是一个内存地址，告诉我们执行<code>A()</code>后返回的实际上是函数<code>B()</code>的内存地址，但是此时<code>B()</code>是不会被执行的，因为我们只是在<code>A()</code>中定义了函数<code>B()</code>，并没有显式调用/执行它。</li>
+<li>如果采用闭包的定义形式，在执行函数<code>B()</code>的时候，会先在<code>B()</code>的body内找变量，如果此时没有找到，会出去在<code>A()</code>的body内找，之后不会再向外去找。换句话说，<strong>内层函数是可以引用外部函数中定义的局部变量的</strong>，但是无论内外层函数都是不能引用全局变量的，呼应第三点。</li>
+<li>闭包的验证：检验函数<code>A()</code>是不是闭包，可以调用<code>__closure__</code>(以上面的<code>A()</code>为例)<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = A()   <span class="comment">#此处闭包作为对象被返回</span></span><br><span class="line">print(x.__closure__)</span><br></pre></td></tr></table></figure>
+如果输出为类似下面的形式，说明其是一个闭包<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&lt;cell at <span class="number">0x0000000001DF5708</span>: str object at <span class="number">0x0000000001E79688</span>&gt;,)</span><br></pre></td></tr></table></figure>
+<h3 id="闭包应用实例和应用场景"><a href="#闭包应用实例和应用场景" class="headerlink" title="闭包应用实例和应用场景"></a>闭包应用实例和应用场景</h3></li>
+<li>在上面，当闭包被返回的时候，它的所有变量就已经固定了，形成了一个封闭的对象，这个对象包含了其引用的所有的外部、内部变量和表达式。当然，闭包的参数除外。</li>
+<li>闭包可以保存运行环境，保证每次函数执行的结果都是基于上次这个函数的运行结果<a href="https://blog.csdn.net/sc_lilei/article/details/80464645" target="_blank" rel="noopener">摘自此处</a><br>思考下面的代码会输出什么？<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">_list = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(a)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> i+a</span><br><span class="line">    _list.append(func)</span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> _list:</span><br><span class="line">    print(f(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+结果并不是<code>1,2,3</code>，而是<code>3,3,3</code>，这是因为在Python中，循环体内定义的函数是无法保存循环执行过程中的不停变化的外部变量的，即普通函数无法保存运行环境！</li>
+<li>注意闭包是不能修改外部函数的局部变量的，只能引用。换句话说，当一个闭包被返回了，除了能够改变内部函数的参数之外，我们是没有能力修改外部函数的局部变量的（如果在内部函数中有显式的赋值语句，相当于在内部函数的局部变量屏蔽了外部函数的局部变量，等到内部函数执行完，一切就恢复到初始状态了）。<h3 id="闭包和类的区别"><a href="#闭包和类的区别" class="headerlink" title="闭包和类的区别"></a>闭包和类的区别</h3></li>
+<li>闭包和类具有相通性，都带有面向对象的封装思维，类允许你定义字段和方法，而闭包则会从函数调用中保存有关局部变量的信息。</li>
+<li>也有人说，在功能上，闭包和类是等价的。</li>
+<li>深入理解闭包，<a href="https://lotabout.me/2016/thoughts-of-closure/" target="_blank" rel="noopener">参考这里</a><h1 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h1>待整理</li>
+</ul>
+<h1 id="Python变量查找LEGB原则"><a href="#Python变量查找LEGB原则" class="headerlink" title="Python变量查找LEGB原则"></a>Python变量查找LEGB原则</h1><p>待整理</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/wiki/%E7%BC%96%E7%A8%8B/Python/Conda_and_pip/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Conda_and_pip
+                
+            </div>
+        </a>
+    
+    
+        <a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/AnalyseTool/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">AnalyseTool</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Pengyang &copy; 2020 
+            <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="noopener">wikitten</a>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

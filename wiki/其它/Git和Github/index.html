@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Git和Github | Pengyang&#39;s wiki</title>
+    
+    
+        <meta name="keywords" content="Git和Github" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Github遇到的问题 运行 ssh -T git@github.com 命令显示 &#96;git@github.com: Permission denied (publickey)&#96; 时 原因：这是因为本机的公钥没有上传到github中，github并不信任本机，所以只要把本机的公钥交给Github就可以了  先确定本机有没有公钥，windows系统下的公钥位置一般在 C:&#x2F;&#x2F;Users&#x2F;用户名&#x2F;.s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git和Github">
+<meta property="og:url" content="http://yoursite.com/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/index.html">
+<meta property="og:site_name" content="Pengyang&#39;s wiki">
+<meta property="og:description" content="Github遇到的问题 运行 ssh -T git@github.com 命令显示 &#96;git@github.com: Permission denied (publickey)&#96; 时 原因：这是因为本机的公钥没有上传到github中，github并不信任本机，所以只要把本机的公钥交给Github就可以了  先确定本机有没有公钥，windows系统下的公钥位置一般在 C:&#x2F;&#x2F;Users&#x2F;用户名&#x2F;.s">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-28T07:16:00.958Z">
+<meta property="article:modified_time" content="2020-12-28T07:16:00.958Z">
+<meta property="article:author" content="Pengyang">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Pengyang&#39;s wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pengyang&#39;s wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-up fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Liunx
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Docker与CUDA
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">CUDA一般知识</a></li>  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/Docker%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">Docker一般知识</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/Liunx/tmux_zsh/">tmux_zsh</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">常用命令</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98/">服务器问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            其它
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file active"><a href="/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/">Git和Github</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Vscode/">Vscode</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo搭建博客</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            待分类
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/English/">English</a></li>  <li class="file"><a href="/wiki/%E4%B9%A6%E5%8D%95/">书单</a></li>  <li class="file"><a href="/wiki/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据分析
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/">一些工具</a></li>  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/GAN/">GAN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/">RNN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Trick/">Trick</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E4%BC%98%E8%B4%A8Blog%E7%BF%BB%E8%AF%91/">优质Blog翻译</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            编程
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Latex
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/">一些操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E5%B8%B8%E7%94%A8%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%95%B4%E7%90%86/">常用数学符号整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Matlab
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E6%B3%A8%E6%84%8F/">注意</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/Conda_and_pip/">Conda_and_pip</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/">python通用知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Pytorch
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/AnalyseTool/">AnalyseTool</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Bug/">Bug</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/">Lightning</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/parameters/">parameters</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Tensorflow
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Tensorflow/Bug/">Bug</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            论文
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/BilinearPooling/">BilinearPooling</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/Identification&Verification/">Identification&Verification</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/RotationNet/">RotationNet</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            课程笔记（填坑）
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            cs231n
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/">Lecture2</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture3/">Lecture3</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/%E5%BA%8F/">序</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-其它/Git和Github" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E5%85%B6%E5%AE%83/">其它</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/">
+            <time datetime="2020-12-28T07:16:00.958Z" itemprop="datePublished">2020-12-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Git和Github
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Github"><span class="toc-number">1.</span> <span class="toc-text">Github</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#遇到的问题"><span class="toc-number">1.1.</span> <span class="toc-text">遇到的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Github-Action"><span class="toc-number">1.2.</span> <span class="toc-text">Github Action</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#向Github的New-Repo中上传本地的现有的仓库"><span class="toc-number">1.2.1.</span> <span class="toc-text">向Github的New Repo中上传本地的现有的仓库</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git"><span class="toc-number">2.</span> <span class="toc-text">Git</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改上一次Commit的信息"><span class="toc-number">2.1.</span> <span class="toc-text">修改上一次Commit的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#显示所有目前被git跟踪的文件"><span class="toc-number">2.2.</span> <span class="toc-text">显示所有目前被git跟踪的文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#gitignore的写法"><span class="toc-number">2.2.1.</span> <span class="toc-text">.gitignore的写法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-分支"><span class="toc-number">2.3.</span> <span class="toc-text">Git 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-stash-命令"><span class="toc-number">2.4.</span> <span class="toc-text">git stash 命令</span></a></li></ol></li></ol>
+                </div>
+            
+        
+        
+            <h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h2><h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ul>
+<li><p>运行 <code>ssh -T git@github.com</code> 命令显示 <a href="mailto:`git@github.com">`git@github.com</a>: Permission denied (publickey)` 时</p>
+<p>原因：这是因为本机的公钥没有上传到github中，github并不信任本机，所以只要把本机的公钥交给Github就可以了</p>
+<ul>
+<li>先确定本机有没有公钥，windows系统下的<strong>公钥</strong>位置一般在 <code>C://Users/用户名/.ssh</code>中，其名称为：<code>id_rsa.pub</code> (<strong>注意一定不要泄露密钥，密钥文件和公钥文件同名，但没有后缀)</strong>，如果没有公钥，则在命令行中输入 <code>$ ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;</code>，一路y或者回车（这样的话公钥是没有密码的)</li>
+<li>有了公钥之后，在<code>.ssh</code>目录中我们用命令行获取公钥的内容 <code>$ cat id_rsa.pub</code>，全部复制显示出来的内容</li>
+<li>随后登录自己的github，点击网页右上角头像，选择 Setting 选项，在接下来的界面中选择 SSH and GPG keys， 然后点击 New SSH key, 将刚刚复制的内容放到 Key栏目中并起好名字，此时问题解决。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Github-Action"><a href="#Github-Action" class="headerlink" title="Github Action"></a>Github Action</h3><ul>
+<li>官方Doc ：<a href="https://docs.github.com/en/actions" target="_blank" rel="noopener">https://docs.github.com/en/actions</a></li>
+<li>细节注意： <a href="https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions" target="_blank" rel="noopener">https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions</a></li>
+</ul>
+<h4 id="向Github的New-Repo中上传本地的现有的仓库"><a href="#向Github的New-Repo中上传本地的现有的仓库" class="headerlink" title="向Github的New Repo中上传本地的现有的仓库"></a>向Github的New Repo中上传本地的现有的仓库</h4><ol>
+<li><p>首先在Github上新建空的New Repo</p>
+</li>
+<li><p>在本地仓库中进行首次<code>git add 和 commit</code></p>
+</li>
+<li><p>在本地仓库执行下面的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin url_of_your_newrepository #url_of_your_newrepository 是github上的仓库的地址</span><br><span class="line">git push --set-upstream origin mastr</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><h3 id="修改上一次Commit的信息"><a href="#修改上一次Commit的信息" class="headerlink" title="修改上一次Commit的信息"></a>修改上一次Commit的信息</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> git commit -<span class="literal">-amend</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果已经push了，那就不可能在被修改了，并且这个命令是修改的最近一次的提交的信息。</li>
+</ul>
+<h3 id="显示所有目前被git跟踪的文件"><a href="#显示所有目前被git跟踪的文件" class="headerlink" title="显示所有目前被git跟踪的文件"></a>显示所有目前被git跟踪的文件</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> git ls<span class="literal">-files</span></span><br></pre></td></tr></table></figure>
+<h4 id="gitignore的写法"><a href="#gitignore的写法" class="headerlink" title=".gitignore的写法"></a><code>.gitignore</code>的写法</h4><ul>
+<li>支持正则</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*.txt       <span class="comment">#忽略所有的.txt后缀的文件</span></span><br><span class="line">!readme.txt <span class="comment">#不忽略 readme.txt</span></span><br><span class="line">/TODO       <span class="comment">#仅在当前目录下忽略TODO文件夹，但不包括子目录下的 TODO文件夹</span></span><br><span class="line">build/      <span class="comment">#忽略build文件夹下的所有文件</span></span><br></pre></td></tr></table></figure>
+<h3 id="Git-分支"><a href="#Git-分支" class="headerlink" title="Git 分支"></a>Git 分支</h3><p>常用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git branch  #后面不加任何命令是显示 当前所有的分支</span><br><span class="line">git branch &lt;branchname&gt;  #创建新的分支</span><br><span class="line">git checkout &lt;branchname&gt; #切换到对应分支下</span><br><span class="line">git branch -b &lt;branchname&gt;  #创建新的分支并立即切换到这该分支下</span><br><span class="line">git branch -d &lt;branchname&gt;  #删除对应分支</span><br></pre></td></tr></table></figure>
+<h3 id="git-stash-命令"><a href="#git-stash-命令" class="headerlink" title="git stash 命令"></a><code>git stash</code> 命令</h3><p>使用情况：往往在同时处理多个branch的时候，临时需要去别的branch，但是对于当前的branch的代码并不想add和commit，此时对于当前的branch的代码可以使用<code>git stash</code>命令进行暂存</p>
+<p>常用命令</p>
+<ul>
+<li><p>暂存当前代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git stash  #暂存当前的代码</span><br><span class="line">git stash save 'write comments' #暂存当前代码，并且可以写一些东西</span><br></pre></td></tr></table></figure>
+<p><strong>说明：</strong></p>
+<ul>
+<li><p>使用<code>git stash</code>命令暂存之后当前代码会自动恢复至最近一次的commit状态；</p>
+</li>
+<li><p><code>git stash</code>是<strong>全局的</strong>， 即使切换到别的分支，也能看到其他分支的暂时存储的代码，有可能也可以恢复，所以在恢复的时候一定要注意。</p>
+</li>
+</ul>
+</li>
+<li><p>查看所有临时存储的代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash list #检查有所有临时存储的版本</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stash@&#123;0&#125;: WIP on add_img_entropy: 736e718 fix confilct</span><br><span class="line">stash@&#123;1&#125;: WIP on background: 3e1b03d Add feat: add cosine similarity in the last commit, forget to write in the commit comment</span><br><span class="line">stash@&#123;2&#125;: On add_img_entropy: on branch img_entropy, code is running</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li>前面的<code>stash@{0}</code>是stash_id，是我们恢复特定版本的暂存代码需要；</li>
+<li>之后的<code>on ...:</code>表示在哪一个分支上暂时存储的代码，如果save的时候写了message，会在最后进行显示</li>
+<li><code>git stash</code>的存储和删除有点类似栈，删除中间的某个版本，后面的版本会自动向前补位，所以如果想删除很多的stash版本，每一次删除前最好需要使用此命令看一下stash id</li>
+</ul>
+</li>
+<li><p>恢复暂时存储的代码：</p>
+<p>注意：在恢复之前，如果在上一次commit的状态下进行某些改动，是无法进行恢复的，系统会提示你commit或者再次stash当前版本的代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash pop #恢复最新的进度到工作区，并在stash list中删除对应的版本</span><br><span class="line">git stash pop stash@&#123;1&#125; #恢复指定的进度到工作区，并在stash list中删除对应的版本</span><br><span class="line">git stash apply stash@&#123;id&#125; #恢复指定的进度到工作区，但不删除stash list中对应的版本</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除一个存储进度</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git stash drop [stash_id] # 删除指定的存储进度</span><br><span class="line">git stash clear #删除所有的存储进度</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    服务器问题
+                
+            </div>
+        </a>
+    
+    
+        <a href="/wiki/%E5%85%B6%E5%AE%83/Vscode/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Vscode</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Pengyang &copy; 2020 
+            <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="noopener">wikitten</a>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

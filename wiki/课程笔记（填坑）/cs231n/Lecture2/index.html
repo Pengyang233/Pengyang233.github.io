@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Lecture2 | Pengyang&#39;s wiki</title>
+    
+    
+        <meta name="keywords" content="Lecture2" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="图像分类-Data Driven Method 实际上，计算机看一张图像，就是看的一个巨大的数字矩阵；在计算机中，现实图像中的每一个像素点由3个数值来表示，分别代表RGB三个通道的值 实际问题中，我们往往只会给图像一个标签（如Cat），但是计算机看到的却是一个巨大的数字矩阵，这被称为语义鸿沟（Semantic Gap），我们就是希望能够fill this gap  而很多现实中轻微的改变，会导致计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lecture2">
+<meta property="og:url" content="http://yoursite.com/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/index.html">
+<meta property="og:site_name" content="Pengyang&#39;s wiki">
+<meta property="og:description" content="图像分类-Data Driven Method 实际上，计算机看一张图像，就是看的一个巨大的数字矩阵；在计算机中，现实图像中的每一个像素点由3个数值来表示，分别代表RGB三个通道的值 实际问题中，我们往往只会给图像一个标签（如Cat），但是计算机看到的却是一个巨大的数字矩阵，这被称为语义鸿沟（Semantic Gap），我们就是希望能够fill this gap  而很多现实中轻微的改变，会导致计">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/image-20200901113251555.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/image-20200901113848025.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/image-20200902225307616.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/image-20200902230249561.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/image-20200902230648056.png">
+<meta property="og:image" content="http://yoursite.com/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/image-20200902233925412.png">
+<meta property="article:published_time" content="2020-12-28T07:16:00.978Z">
+<meta property="article:modified_time" content="2020-12-28T07:16:00.978Z">
+<meta property="article:author" content="Pengyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/image-20200901113251555.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Pengyang&#39;s wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pengyang&#39;s wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-up fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Liunx
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Docker与CUDA
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">CUDA一般知识</a></li>  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/Docker%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">Docker一般知识</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/Liunx/tmux_zsh/">tmux_zsh</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">常用命令</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98/">服务器问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            其它
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/">Git和Github</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Vscode/">Vscode</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo搭建博客</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            待分类
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/English/">English</a></li>  <li class="file"><a href="/wiki/%E4%B9%A6%E5%8D%95/">书单</a></li>  <li class="file"><a href="/wiki/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据分析
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/">一些工具</a></li>  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/GAN/">GAN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/">RNN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Trick/">Trick</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E4%BC%98%E8%B4%A8Blog%E7%BF%BB%E8%AF%91/">优质Blog翻译</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            编程
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Latex
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/">一些操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E5%B8%B8%E7%94%A8%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%95%B4%E7%90%86/">常用数学符号整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Matlab
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E6%B3%A8%E6%84%8F/">注意</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/Conda_and_pip/">Conda_and_pip</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/">python通用知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Pytorch
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/AnalyseTool/">AnalyseTool</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Bug/">Bug</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/">Lightning</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/parameters/">parameters</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Tensorflow
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Tensorflow/Bug/">Bug</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            论文
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/BilinearPooling/">BilinearPooling</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/Identification&Verification/">Identification&Verification</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/RotationNet/">RotationNet</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            课程笔记（填坑）
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            cs231n
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file active"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/">Lecture2</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture3/">Lecture3</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/%E5%BA%8F/">序</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-课程笔记（填坑）/cs231n/Lecture2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/">课程笔记（填坑）</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/">cs231n</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/">
+            <time datetime="2020-12-28T07:16:00.978Z" itemprop="datePublished">2020-12-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Lecture2
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#图像分类-Data-Driven-Method"><span class="toc-number">1.</span> <span class="toc-text">图像分类-Data Driven Method</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#K近邻-K-Nearest-Neighbor-KNN"><span class="toc-number">2.</span> <span class="toc-text">K近邻 (K-Nearest Neighbor, KNN)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#K的影响"><span class="toc-number">2.0.1.</span> <span class="toc-text">K的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Metric-Distance的影响"><span class="toc-number">2.0.2.</span> <span class="toc-text">Metric Distance的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何选择超参数"><span class="toc-number">2.0.3.</span> <span class="toc-text">如何选择超参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小注意"><span class="toc-number">2.0.4.</span> <span class="toc-text">小注意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性分类（Linear-Classification）"><span class="toc-number">3.</span> <span class="toc-text">线性分类（Linear Classification）</span></a></li></ol>
+                </div>
+            
+        
+        
+            <h2 id="图像分类-Data-Driven-Method"><a href="#图像分类-Data-Driven-Method" class="headerlink" title="图像分类-Data Driven Method"></a>图像分类-Data Driven Method</h2><ul>
+<li>实际上，计算机看一张图像，就是看的一个巨大的数字矩阵；在计算机中，现实图像中的每一个像素点由3个数值来表示，分别代表RGB三个通道的值</li>
+<li><p>实际问题中，我们往往只会给图像一个标签（如Cat），但是计算机看到的却是一个巨大的数字矩阵，这被称为语义鸿沟（Semantic Gap），我们就是希望能够fill this gap</p>
+</li>
+<li><p>而很多现实中轻微的改变，会导致计算机看到完全不同的矩阵，如：Viewpoint Variation，illumination，Deformation，Occlusion，Background Cluster（目标和图像颜色接近，导致看上去和背景融合了）；Intraclass variation（类内实例之间也会有差别，如毛色，年龄等）</p>
+</li>
+<li><p>在图像分类刚刚兴起的时候，采用往往是手动设计分类规则，一般都是先提取图像的edge，然后制定一系列的分类规则，如角点的种类，角点的个数等等，但是这类方法的分类效果很差，也很不鲁棒。</p>
+</li>
+<li><p>后续，更多的方法是基于Data Driven 的方法，它不需要设计很多特定的分类规则，而是丢给你<strong>海量</strong>的数据，去训练一个算法来进行图像分类，之后将该算法进行测试即可。一般来说，此类Data Driven的方法，一定会有两个API，即<code>Train()</code>和<code>Predict()</code>。</p>
+</li>
+<li><p>在 Data Driven 的方法中，最简单的应该是最近邻（Nearest Neighbor，NN）了，在NN算法中，给定两张图像，计算所有对应像素点的$\ell_1$距离（又称曼哈顿距离）的总和，取最小距离的那一类作为预测分类</p>
+<ul>
+<li><p>Q：若有N个样本，对于NN算法来说，Train和Predict的时间复杂度分别是多少？</p>
+<p>A：Train:O(1) ;  Predict: (N)</p>
+<p>​        在NN中，训练阶段只需要让分类器“记住”所有的训练样本和对应的标签，而预测阶段，则需要将输入图像和所有的样本进行曼哈顿距离的计算和比较来确定最小距离那一类。</p>
+</li>
+<li><p>但是这不是很理想，因为NN不是：fast at prediction, slow for training（CNN是^ ^），而正好相反。</p>
+</li>
+<li><p>并且NN非常脆弱，一点也不鲁棒，下图是它的分类情况，可见它的决策面不光滑，并且有的还会“深入”到另一类中，或者单纯的在另一类中“开辟”自己的领地，而这些点很有可能是噪声，实际中我们应该考虑忽略这些点。</p>
+<p><img src="image-20200901113251555.png" alt="NN分类决策面" style="zoom: 67%;" /></p>
+</li>
+</ul>
+</li>
+<li><p>为了解决NN的脆弱的问题，提出了KNN算法（K-Nearest Neighbor），相比于NN，KNN并不是找距离最近的样本，而是找距离最近的K个样本点，并由这些样本点投票得到测试样本的分类结果。</p>
+<ul>
+<li><p>同样，KNN中也可以用距离作为每个样本点的投票权重，最终进行加权投票，这些都算是小改进了。</p>
+</li>
+<li><p>下图展示了KNN取不同K的的分类决策面，其中白色区域表示该区域并没有获得K个最近邻的投票，而NN可以认为是K=1的KNN的特例</p>
+<p><img src="image-20200901113848025.png" alt="KNN在K不同时的分类决策面" style="zoom:67%;" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="K近邻-K-Nearest-Neighbor-KNN"><a href="#K近邻-K-Nearest-Neighbor-KNN" class="headerlink" title="K近邻 (K-Nearest Neighbor, KNN)"></a>K近邻 (K-Nearest Neighbor, KNN)</h2><p>KNN中有两个超参数(hyperparameters)，K和距离度量 Metric distance。（超参数一般指的是无法通过训练得到最优值的参数，它们往往需要我们在训练之前predefined。）</p>
+<h4 id="K的影响"><a href="#K的影响" class="headerlink" title="K的影响"></a>K的影响</h4><p>一般来说，K越大，算法对于噪声的鲁棒性越好，但是并不意味着K越大，算法的效果越好。</p>
+<h4 id="Metric-Distance的影响"><a href="#Metric-Distance的影响" class="headerlink" title="Metric Distance的影响"></a>Metric Distance的影响</h4><p>KNN中常用的两种Metrics是$\ell_1, \ell_2$距离：</p>
+<ul>
+<li>$\ell_1$ (Manhattan) distance<br>$$<br>d_1(I_1, I_2)=\sum_p|I_1^p-I_2^p|<br>$$<br>思考一下L1距离的图像，是一个菱形</li>
+</ul>
+<ul>
+<li><p>$\ell_2$ (Euclidean) distance<br>$$<br>d_2(I_1, I_2)=\sqrt{\sum_p|I_1^p-I_2^p|^2}<br>$$<br>思考一下L2距离的图像，是一个圆形</p>
+</li>
+<li><p>两者的区别和选择</p>
+<ul>
+<li>实际上，Metric 的是对预测空间里底层的几何或者拓扑结构做出的不同假设，因此如何选择，也是有学问的；</li>
+<li>L1距离显然是依赖于预测空间中坐标系的选取的，因为若旋转（改变）坐标系，两点之间的L1距离会改变，而对L2距离则不会有影响；</li>
+<li>一般来说，<strong>若特征向量中各个位置上的元素是有确定的意义的（如年龄、身高或其他分析出来的意义），一般会选择L1距离；而若特征向量是一个通用的向量，不清楚各个位置上元素的意义，则L2距离可能更合适一点。</strong></li>
+<li><em>通过使用不同的metric，可以将KNN推广到更多的数据类型上，其实本质上是根据数据类型来选择KNN中合适的Metric</em></li>
+</ul>
+</li>
+<li><p>例子比较</p>
+<p><img src="image-20200902225307616.png" alt="L1L2距离的决策边界"></p>
+<p>上图展示了采用不同的metric，KNN输出的决策边界的样子：</p>
+<ul>
+<li>L1的决策边界趋向于跟随坐标轴，因为L1 metric本身就是取决于我们的对于坐标轴的选取；</li>
+<li>L2的决策边界只是放在了最自然的地方</li>
+</ul>
+</li>
+</ul>
+<h4 id="如何选择超参数"><a href="#如何选择超参数" class="headerlink" title="如何选择超参数"></a>如何选择超参数</h4><p>注意我们训练模型的本质是希望在<strong>没见过</strong>的数据上的表现最好！！</p>
+<ol>
+<li><p>从Train Set选择表现最好的超参（垃圾，一般泛化性比较差）</p>
+</li>
+<li><p>将Dataset分成Train和Test，从Test Set上选择表现最好的超参（垃圾，在一定程度上是作假行为，因为你只能保证在Test上最好，不一定保证在其他没见过的数据上也相对好）</p>
+</li>
+<li><p>将Dataset分成Train，Val，Test，从Val上选择表现最好的超参，在Test上做测试，论文中写Test的结果。（最棒！诚实的行为，因为要保证test是模型没见过的数据，超参不能在没加过的数据上调~）</p>
+</li>
+<li><p>交叉验证，往往用在小的数据集上，DL中一般不用，因为DL的数据集大，而且训练比较浪费时间。</p>
+<p>交叉验证指的是将数据平均分成几折（fold）和一个Test，（分成几折就是几折交叉验证），依次选择每一个折的数据当val，剩下折的数据当train，所有折遍历完了之后，选择平均在val上表现最好的超参。</p>
+<p>一般来说，N折交叉验证后会画一个这种图像，来展示结果并选择超参。（下图展示的是5折交叉验证）</p>
+<p><img src="image-20200902230249561.png" alt="image-20200902230249561" style="zoom:80%;" /></p>
+</li>
+</ol>
+<h4 id="小注意"><a href="#小注意" class="headerlink" title="小注意"></a>小注意</h4><p>实际上，KNN一般不用在图像分类上，原因如下：</p>
+<ul>
+<li><p>速度问题：fast for train，slow for test并不是我们想要的</p>
+</li>
+<li><p>L1，L2距离都不适合度量两张图像的相似度</p>
+</li>
+<li><p>维度灾难：由于KNN对于数据没有任何的先验假设，因此为了更好的分类或者正常工作，就需要在样本空间上有非常密集的样本点。</p>
+<p>下图中，展示了KNN中的维度灾难，比如当维度是１的时候，可能我们需要的“密集”的样本点是$4$个，才能够让KNN正常工作；那么当维度为２的时候，此时需要的样本点可能就是$4^2$个；3维的时候需要$4^3$个… 这种样本点的个数是随着样本空间的维度增长而指数增长的，指数增长是一个非常坏的消息。</p>
+<p><img src="image-20200902230648056.png" alt="KNN的维度灾难" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h2 id="线性分类（Linear-Classification）"><a href="#线性分类（Linear-Classification）" class="headerlink" title="线性分类（Linear Classification）"></a>线性分类（Linear Classification）</h2><ul>
+<li><p>线性分类器是参数化的最简单的分类器，但是它的原理是可以推广到CNN中的</p>
+</li>
+<li><p>在参数化的模型中（KNN并不是参数化的模型），模型在训练好后会将Train Data的知识固化到可学习的参数中，在测试的时候只需要这些参数，而不需要训练数据</p>
+</li>
+<li><p>线性分类器的形式是：<br>$$<br>f(x)=Wx+b<br>$$<br>如对于一个Cifar-10中的分类问题，其数据的size是32*32*3 ，因此输入样本x（拉伸成向量）的尺寸：$size(x)=3027\times 1$，参数W的尺寸：$size(W)=10\times 3072$</p>
+<p>上面的b是bias，在线性分类器中一般不与训练数据发生交互，仅仅表示一些数据独立的偏好，比如狗比猫多的时候，b中对于狗的偏差元素可能更大</p>
+<p>分类器的输出$f(x)$尺寸是$10\times 1$，表示对应类分类的得分。</p>
+</li>
+</ul>
+<ul>
+<li><p>实际上，线性分类器从W来看可以看成模板匹配法，<strong>W中每行表示对应类的模板</strong>，该行与输入元素进行点积计算输入与该类模板的相似度，而由于W中每类只学习到了一个模板，所以这个模板一般是<em>平均模板</em>，对于类内极端的样本或者不常见的样本，往往会分类错误。下图展示了W每类的平均模板</p>
+<p><img src="image-20200902233925412.png" alt="W中每类的平局模板" style="zoom:80%;" /></p>
+</li>
+<li><p>在空间中，实际上线性分类器是在寻找各个类之间的线性决策面（边界）</p>
+</li>
+<li>因此，对于线性分类器来说困难样本为<ul>
+<li>非线性的分类问题（类类之间的决策边界是非线性的）</li>
+<li>多label问题</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture3/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Lecture3
+                
+            </div>
+        </a>
+    
+    
+        <a href="/wiki/%E8%AE%BA%E6%96%87/BilinearPooling/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">BilinearPooling</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Pengyang &copy; 2020 
+            <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="noopener">wikitten</a>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

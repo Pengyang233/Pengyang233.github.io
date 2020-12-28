@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>CUDA一般知识 | Pengyang&#39;s wiki</title>
+    
+    
+        <meta name="keywords" content="CUDA一般知识" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="无论想安装什么版本的CUDA，一定要确认host的驱动！！！有时即使你安装了10个CUDA，但是其中有9个CUDA的版本和host上Nvidia Driver版本不兼容，那么那9个怎么改也读不出来 一些坑 一般来说CUDA Driver 越高越好，即使高版本的Driver也能向下兼容低版本的Library，即可以使用低版本的CUDA 有时候，在命令行里敲nvcc -V显示出来的版本，并不一定和nv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUDA一般知识">
+<meta property="og:url" content="http://yoursite.com/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Pengyang&#39;s wiki">
+<meta property="og:description" content="无论想安装什么版本的CUDA，一定要确认host的驱动！！！有时即使你安装了10个CUDA，但是其中有9个CUDA的版本和host上Nvidia Driver版本不兼容，那么那9个怎么改也读不出来 一些坑 一般来说CUDA Driver 越高越好，即使高版本的Driver也能向下兼容低版本的Library，即可以使用低版本的CUDA 有时候，在命令行里敲nvcc -V显示出来的版本，并不一定和nv">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-28T07:16:00.954Z">
+<meta property="article:modified_time" content="2020-12-28T07:16:00.954Z">
+<meta property="article:author" content="Pengyang">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Pengyang&#39;s wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pengyang&#39;s wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-up fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Liunx
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Docker与CUDA
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file active"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">CUDA一般知识</a></li>  <li class="file"><a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/Docker%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">Docker一般知识</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/Liunx/tmux_zsh/">tmux_zsh</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  <li class="file"><a href="/wiki/Liunx/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">常用命令</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a></li>  <li class="file"><a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98/">服务器问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            其它
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Git%E5%92%8CGithub/">Git和Github</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/Vscode/">Vscode</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo搭建博客</a></li>  <li class="file"><a href="/wiki/%E5%85%B6%E5%AE%83/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            待分类
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/English/">English</a></li>  <li class="file"><a href="/wiki/%E4%B9%A6%E5%8D%95/">书单</a></li>  <li class="file"><a href="/wiki/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据分析
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/">一些工具</a></li>  <li class="file"><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">基本知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/GAN/">GAN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/">RNN</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Trick/">Trick</a></li>  <li class="file"><a href="/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E4%BC%98%E8%B4%A8Blog%E7%BF%BB%E8%AF%91/">优质Blog翻译</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            编程
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Latex
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/">一些操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Latex/%E5%B8%B8%E7%94%A8%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%95%B4%E7%90%86/">常用数学符号整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Matlab
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Matlab/%E6%B3%A8%E6%84%8F/">注意</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/Conda_and_pip/">Conda_and_pip</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Python/python%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86/">python通用知识</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Pytorch
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/AnalyseTool/">AnalyseTool</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Bug/">Bug</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/Lightning/">Lightning</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/parameters/">parameters</a></li>  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Pytorch/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">常用操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Tensorflow
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E7%BC%96%E7%A8%8B/Tensorflow/Bug/">Bug</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            论文
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/BilinearPooling/">BilinearPooling</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/Identification&Verification/">Identification&Verification</a></li>  <li class="file"><a href="/wiki/%E8%AE%BA%E6%96%87/RotationNet/">RotationNet</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            课程笔记（填坑）
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            cs231n
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture2/">Lecture2</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/Lecture3/">Lecture3</a></li>  <li class="file"><a href="/wiki/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A1%AB%E5%9D%91%EF%BC%89/cs231n/%E5%BA%8F/">序</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-Liunx/Docker与CUDA/CUDA一般知识" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Liunx/">Liunx</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Liunx/Docker%E4%B8%8ECUDA/">Docker与CUDA</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/CUDA%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/">
+            <time datetime="2020-12-28T07:16:00.954Z" itemprop="datePublished">2020-12-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            CUDA一般知识
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一些坑"><span class="toc-number">1.</span> <span class="toc-text">一些坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CUDA知识"><span class="toc-number">2.</span> <span class="toc-text">CUDA知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cudnn-是什么？"><span class="toc-number">2.1.</span> <span class="toc-text">cudnn 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CUDA-Toolkit-是什么？"><span class="toc-number">2.2.</span> <span class="toc-text">CUDA Toolkit 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nvcc与nvidia-smi"><span class="toc-number">2.3.</span> <span class="toc-text">nvcc与nvidia-smi</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些Bug和问题"><span class="toc-number">3.</span> <span class="toc-text">一些Bug和问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vscode无法读取-bashrc中的环境变量（不确定是否能够解决）"><span class="toc-number">3.1.</span> <span class="toc-text">Vscode无法读取.&#x2F;bashrc中的环境变量（不确定是否能够解决）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加路径时遇到的PATH、-LIBRARY-PATH、-LD-LIBRARY-PATH的区别"><span class="toc-number">3.2.</span> <span class="toc-text">添加路径时遇到的PATH、 LIBRARY_PATH、 LD_LIBRARY_PATH的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-更新-Nvidia-显卡驱动"><span class="toc-number">4.</span> <span class="toc-text">Ubuntu 更新 Nvidia 显卡驱动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#详细步骤"><span class="toc-number">4.1.</span> <span class="toc-text">详细步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可能出现的错误、提示和注意事项"><span class="toc-number">4.2.</span> <span class="toc-text">可能出现的错误、提示和注意事项</span></a></li></ol></li></ol>
+                </div>
+            
+        
+        
+            <p><strong>无论想安装什么版本的CUDA，一定要确认host的驱动！！！有时即使你安装了10个CUDA，但是其中有9个CUDA的版本和host上Nvidia Driver版本不兼容，那么那9个怎么改也读不出来</strong></p>
+<h2 id="一些坑"><a href="#一些坑" class="headerlink" title="一些坑"></a>一些坑</h2><ul>
+<li><strong>一般来说CUDA Driver 越高越好，即使高版本的Driver也能向下兼容低版本的Library，即可以使用低版本的CUDA</strong></li>
+<li>有时候，在命令行里敲<code>nvcc -V</code>显示出来的版本，并不一定和<code>nvidia-smi</code>的版本一致，此时以你的环境变量里写的为准</li>
+</ul>
+<h2 id="CUDA知识"><a href="#CUDA知识" class="headerlink" title="CUDA知识"></a>CUDA知识</h2><ul>
+<li>CUDA 全称Compute Unified Device Architecture，是显卡厂商NVIDIA推出的运算平台，按照<a href="https://blogs.nvidia.com/blog/2012/09/10/what-is-cuda-2/" target="_blank" rel="noopener">官方</a>的说法是，<strong>CUDA是一个并行计算平台和编程模型，能够使得使用GPU进行通用计算变得简单和优雅</strong>。</li>
+</ul>
+<h3 id="cudnn-是什么？"><a href="#cudnn-是什么？" class="headerlink" title="cudnn 是什么？"></a>cudnn 是什么？</h3><p>是一个专门为深度学习计算设计的软件库，里面提供了很多专门的计算函数，如卷积等。</p>
+<blockquote>
+<p>具体细节可参阅<a href="https://developer.nvidia.com/gpu-accelerated-libraries" target="_blank" rel="noopener">GPU-Accelerated Libraries</a></p>
+</blockquote>
+<h3 id="CUDA-Toolkit-是什么？"><a href="#CUDA-Toolkit-是什么？" class="headerlink" title="CUDA Toolkit 是什么？"></a>CUDA Toolkit 是什么？</h3><blockquote>
+<p>参考<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#major-components" target="_blank" rel="noopener">CUDA Toolkit</a> </p>
+</blockquote>
+<p>CUDA Toolkit由以下组件组成：</p>
+<ul>
+<li><strong>Compiler</strong>: CUDA-C和CUDA-C++编译器<code>NVCC</code>，类似于gcc是c语言的编译器</li>
+<li><strong>Tools</strong>: 提供一些像<code>profiler</code>,<code>debuggers</code>等工具</li>
+<li><strong>Libraries</strong>: 下面列出的部分科学库和实用程序库可以在<code>lib/</code>目录中使用(Windows上的DLL位于<code>bin/</code>中)，它们的接口在<code>include/</code>目录中可获取。     - <strong>cudart</strong>: CUDA Runtime     - <strong>cudadevrt</strong>: CUDA device runtime     - <strong>cupti</strong>: CUDA  profiling tools interface     - <strong>nvml</strong>: NVIDIA management library     - <strong>nvrtc</strong>: CUDA runtime compilation     - <strong>cublas</strong>: BLAS (Basic Linear Algebra Subprograms，基础线性代数程序集)     - <strong>cublas_device</strong>: BLAS kernel interface     - …</li>
+<li><strong>CUDA Samples</strong>: 演示如何使用各种CUDA和library API的代码示例。可在Linux和Mac上的<code>samples/</code>目录中获得，Windows上的路径是<code>C：\ProgramData\NVIDIA Corporation\CUDA Samples</code>中。在Linux和Mac上，<code>samples/</code>目录是只读的，如果要对它们进行修改，则必须将这些示例复制到另一个位置。</li>
+<li><strong>CUDA Driver</strong>: 运行CUDA应用程序需要系统至少有一个<strong>具有CUDA功能的GPU</strong>和<strong>与CUDA工具包兼容的驱动程序</strong>。每个版本的CUDA工具包都对应一个最低版本的CUDA Driver，也就是说如果你安装的CUDA Driver版本比官方推荐的还低，那么很可能会无法正常运行。CUDA Driver是向后兼容的，这意味着根据CUDA的特定版本编译的应用程序将继续在后续发布的Driver上也能继续工作。通常为了方便，在安装CUDA Toolkit的时候会默认安装CUDA Driver。在开发阶段可以选择默认安装Driver。<strong>在安装前，需要查询toolkit与Driver版本之间的对应关系</strong></li>
+</ul>
+<h3 id="nvcc与nvidia-smi"><a href="#nvcc与nvidia-smi" class="headerlink" title="nvcc与nvidia-smi"></a><code>nvcc</code>与<code>nvidia-smi</code></h3><ul>
+<li><p><code>nvcc</code>：就是CUDA的编译器,可以从CUDA Toolkit的<code>/bin</code>目录中获取；</p>
+<blockquote>
+<p>由于程序是要经过编译器编程成可执行的二进制文件，而cuda程序有两种代码，一种是运行在cpu上的host代码，一种是运行在gpu上的device代码，所以<code>nvcc</code>编译器要保证两部分代码能够编译成二进制文件在不同的机器上执行。</p>
+</blockquote>
+</li>
+<li><p><code>nvidia-smi</code>：全称是NVIDIA  System Management Interface ，它是一个基于<code>NVIDIA Management Library(NVML)</code>构建的命令行实用工具，旨在<strong>帮助管理和监控</strong>NVIDIA GPU设备。</p>
+</li>
+</ul>
+<h2 id="一些Bug和问题"><a href="#一些Bug和问题" class="headerlink" title="一些Bug和问题"></a>一些Bug和问题</h2><h3 id="Vscode无法读取-bashrc中的环境变量（不确定是否能够解决）"><a href="#Vscode无法读取-bashrc中的环境变量（不确定是否能够解决）" class="headerlink" title="Vscode无法读取./bashrc中的环境变量（不确定是否能够解决）"></a>Vscode无法读取<code>./bashrc</code>中的环境变量（不确定是否能够解决）</h3><blockquote>
+<p>有时为了切换cuda版本，需要在<code>~/.bashrc</code>中进行CUDA的相关环境变量的修改，修改完后，在Terminal中输入<code>nvcc -V</code>现实的是在<code>~/.bashrc</code>中的CUDA版本，但是实际上Vscode remote 的时候，程序跑起来并不是。</p>
+</blockquote>
+<p>这种情况往往出现在使用Vscode远程炼丹的过程中，原因可能是（尚未证实）：Vscode remote 在登陆远程服务器的时候，使用的是Interactive login的方式，这种方式会按照以下顺序加载环境变量：<code>~/.bash_profile -&gt; ~/.bash_login -&gt; ~/.profile</code>，如果一旦按照上面的顺序找到一个文件，则不会在继续寻找了（但是一定会加载全局环境变量<code>/etc/profile</code>）。而我们一般在<code>~/.bashrc</code>中修改环境变量，因此无法被Vscode读取到，所以解决此问题的方法有两种：</p>
+<ol>
+<li><p>在<code>~/.profile</code>中修改需要的环境变量</p>
+<blockquote>
+<p>其实一般情况下<code>~/.bash_profile</code>和<code>~/.bash_login</code>这两个文件是不存在的，但是最好还是确定一下</p>
+</blockquote>
+</li>
+<li><p>在程序中指定环境变量，如python中的<code>os.environ[xxx]=xxx</code></p>
+</li>
+</ol>
+<p>另外需要注意的是，Vscode remote 的时候下面的终端栏是可以读取到<code>~/.bashrc</code>的环境变量的，因为这个终端的访问方式是Interactive non-login。</p>
+<p>似乎使用pycharm进行远程，也有同样的问题出现，不过pycharm中好像可以指定环境变量，在<code>setting</code>里面</p>
+<blockquote>
+<p>参考链接：</p>
+<p><a href="https://debug.fanzheng.org/post/vscode-remote-env-loading-sequel.html" target="_blank" rel="noopener">链接1</a></p>
+<p><a href="https://blog.csdn.net/weixin_40818267/article/details/103939902?utm_medium=distribute.pc_relevant.none-task-blog-baidulandingword-3&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">链接2</a></p>
+<p><a href="http://feihu.me/blog/2014/env-problem-when-ssh-executing-command-on-remote/#配置文件建议" target="_blank" rel="noopener">bash的四种访问模式和区别</a></p>
+</blockquote>
+<h3 id="添加路径时遇到的PATH、-LIBRARY-PATH、-LD-LIBRARY-PATH的区别"><a href="#添加路径时遇到的PATH、-LIBRARY-PATH、-LD-LIBRARY-PATH的区别" class="headerlink" title="添加路径时遇到的PATH、 LIBRARY_PATH、 LD_LIBRARY_PATH的区别"></a>添加路径时遇到的PATH、 LIBRARY_PATH、 LD_LIBRARY_PATH的区别</h3><ul>
+<li>可以在笔记本<code>Linux/基础知识</code>中找到</li>
+</ul>
+<h2 id="Ubuntu-更新-Nvidia-显卡驱动"><a href="#Ubuntu-更新-Nvidia-显卡驱动" class="headerlink" title="Ubuntu 更新 Nvidia 显卡驱动"></a>Ubuntu 更新 Nvidia 显卡驱动</h2><p><strong>注意：这里仅仅是更新驱动</strong></p>
+<h3 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h3><p>如果第一次装，似乎还要先屏蔽原生的显卡驱动nouveau，因为nvidia的驱动是第三方的</p>
+<ol>
+<li><p>卸载原先的驱动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove --purge nvidia*</span><br><span class="line"><span class="meta">#</span><span class="bash"> 输入 nvidia-smi 显示没有此命令，则表示卸载干净，如果卸载不干净，换下面的试一下，反正我上次用上面的这句话没卸载干净，用下面的才好使</span></span><br><span class="line">sudo /usr/bin/nvidia-uninstall</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输入<code>sudo service lightdm stop</code> (干嘛的我也不知道，师兄也弄了这句话)</p>
+</li>
+<li><p>获取权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod a+x NVIDIA-Linux-x86_64-396.18.run #获取权限</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行安装命令（虽然很长，但是也要全部打进去，后面每一个命令都是有用的）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ./NVIDIA-Linux-x86_64-396.18.run –no-x-check –no-nouveau-check –no-opengl-files #安装驱动</span><br><span class="line">nvidia-smi # 能够有输出，说明安装成功</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="可能出现的错误、提示和注意事项"><a href="#可能出现的错误、提示和注意事项" class="headerlink" title="可能出现的错误、提示和注意事项"></a>可能出现的错误、提示和注意事项</h3><ul>
+<li><p><strong>提示</strong>：<code>The distribution-provided pre-install script failed! Are you sure you want to continue?</code></p>
+<p>不管，继续，为了让你确认没错，因此不管有错没错都会出现</p>
+</li>
+<li><p><strong>提示</strong>：<code>Nvidia’s 32-bit compatibility libraries?</code></p>
+<p>选择 No（我上次的做法）</p>
+</li>
+<li><p><strong>提示</strong>：<code>Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up.</code></p>
+<p>让选Yes，但是我上次选的No，还不清楚会有什么影响</p>
+</li>
+<li><p><strong>提示</strong>：<code>Would you like to register the kernel module souces with DKMS? This will allow DKMS to automatically build a new module, if you install a different kernel later?</code> </p>
+<p>选No</p>
+</li>
+<li><p><strong>错误</strong>：<code>An NVIDIA kernel module &#39;nvidia-uvm&#39; appears to already be loaded in your kernel.</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An NVIDIA kernel module &#39;nvidia-uvm&#39; appears to already be loaded in your kernel. This may be because it is in use (for example, by an X server, a CUDA program, or the NVIDIA Persistence Daemon), but this may also happen if your kernel was configured without support for module unloading.  Please be sure to exit any programs that may be using the GPU(s) before attempting to upgrade your driver.  If no GPU-based programs are running, you know that your kernel supports module unloading, and you still receive this message, then an error may have occured that has corrupted an NVIDIA kernel module&#39;s usage count, for which the simplest remedy is to reboot your computer.</span><br></pre></td></tr></table></figure>
+<p>由于有一些程序占用了<code>nvidia-nvm</code>导致无法正常安装，可能是有的同学还在跑程序，然后程序没退干净导致的，可以执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof | grep nvidia.uvm</span><br></pre></td></tr></table></figure>
+<p>得到<code>pid</code>后(<code>pid</code>是第一个出现的数)，使用<code>sudo kill -9 pid</code>杀掉进程，再次运行安装程序</p>
+</li>
+<li><p><strong>错误</strong>：<code>The CC version check failed</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">The CC version check failed</span><br><span class="line"></span><br><span class="line">The kernel was built with gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) , but the current compiler version is cc (Ubuntu 4.8.5-4ubuntu2) 4.8.5.</span><br><span class="line"></span><br><span class="line">This may lead to subtle problems; if you are not certain whether the mismatched compiler will be compatible with your kernel, you may wish to abort installation, set the CC environment variable to the name of the compiler used to compile your kernel, and restart installation. (Answer: Abort installation</span><br></pre></td></tr></table></figure>
+<p>这个问题也很简单，就像原文说的那样，该kernel是gcc==5.4.0编译的，但当前编译器的gcc版本是4.8.5。我们需要安装并更改gcc编译器版本。</p>
+<p>该怎么做呢？具体步骤就是到官网下载gcc 5.4.0的压缩文件，在本地解压之后按顺序安装。参考<a href="https://blog.csdn.net/Marilynviolet/article/details/100009979" target="_blank" rel="noopener">本文</a>即可完成：</p>
+</li>
+<li><p><strong>注意</strong>：更新驱动之后，之前基于老的驱动建立的docker很大可能时进不去的，做好备份</p>
+</li>
+</ul>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/wiki/Liunx/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    服务器管理
+                
+            </div>
+        </a>
+    
+    
+        <a href="/wiki/Liunx/Docker%E4%B8%8ECUDA/Docker%E4%B8%80%E8%88%AC%E7%9F%A5%E8%AF%86/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Docker一般知识</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Pengyang &copy; 2020 
+            <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="noopener">wikitten</a>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
